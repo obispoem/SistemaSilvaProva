@@ -1,17 +1,14 @@
 package view;
 
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatSolarizedDarkIJTheme;
-
 public class JFrmPrincipal extends javax.swing.JFrame {
-
-    String banco;
 
     public JFrmPrincipal() {
         initComponents();
-        setTitle("Sistema Vinhos");
+        setTitle("Sistema Vinho");
         setExtendedState(MAXIMIZED_BOTH);
         jChbMnuBancoLocal.setSelected(false);
         jChbMnuBancoIF.setSelected(false);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -206,16 +203,6 @@ public class JFrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMnuCompraActionPerformed
 
     public static void main(String args[]) {
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            FlatSolarizedDarkIJTheme.setup();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         java.awt.EventQueue.invokeLater(() -> {
             new JFrmPrincipal().setVisible(true);
         });

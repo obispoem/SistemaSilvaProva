@@ -53,24 +53,24 @@ public class JDlgFornecedor extends javax.swing.JDialog {
         ebs_jBtnConfirmar.setEnabled(status);
 
         if (status) {
-            Util.habilitar(true, ebs_jTxtid_fornecedor, ebs_jCbofk_transportadora, ebs_jChbativo, ebs_jTxtnome_fornecedor, 
-                    ebs_jFmtcelular, ebs_jTxtnome_empresa, ebs_jFmttelefone, ebs_jTxtnome_fant, ebs_jFmtcnpj, 
-                    ebs_jTxtsite_empresa, ebs_jTxtemail, ebs_jTxtendereco, ebs_jTxtnumero, ebs_jTxtbairro, ebs_jTxtcidade, 
+            Util.habilitar(true, ebs_jTxtid_fornecedor, ebs_jCbofk_transportadora, ebs_jChbativo, ebs_jTxtnome_fornecedor,
+                    ebs_jFmtcelular, ebs_jTxtnome_empresa, ebs_jFmttelefone, ebs_jTxtnome_fant, ebs_jFmtcnpj,
+                    ebs_jTxtsite_empresa, ebs_jTxtemail, ebs_jTxtendereco, ebs_jTxtnumero, ebs_jTxtbairro, ebs_jTxtcidade,
                     ebs_jCboestado, ebs_jBtnCancelar, ebs_jBtnConfirmar);
             Util.habilitar(false, ebs_jBtnIncluir, ebs_jBtnAlterar, ebs_jBtnPesquisar, ebs_jBtnExcluir);
         } else {
-            Util.habilitar(false, ebs_jTxtid_fornecedor, ebs_jCbofk_transportadora, ebs_jChbativo, ebs_jTxtnome_fornecedor, 
-                    ebs_jFmtcelular, ebs_jTxtnome_empresa, ebs_jFmttelefone, ebs_jTxtnome_fant, ebs_jFmtcnpj, 
-                    ebs_jTxtsite_empresa, ebs_jTxtemail, ebs_jTxtendereco, ebs_jTxtnumero, ebs_jTxtbairro, ebs_jTxtcidade, 
+            Util.habilitar(false, ebs_jTxtid_fornecedor, ebs_jCbofk_transportadora, ebs_jChbativo, ebs_jTxtnome_fornecedor,
+                    ebs_jFmtcelular, ebs_jTxtnome_empresa, ebs_jFmttelefone, ebs_jTxtnome_fant, ebs_jFmtcnpj,
+                    ebs_jTxtsite_empresa, ebs_jTxtemail, ebs_jTxtendereco, ebs_jTxtnumero, ebs_jTxtbairro, ebs_jTxtcidade,
                     ebs_jCboestado, ebs_jBtnCancelar, ebs_jBtnConfirmar);
             Util.habilitar(true, ebs_jBtnIncluir, ebs_jBtnAlterar, ebs_jBtnPesquisar, ebs_jBtnExcluir);
         }
     }
 
     private void limparCampos() {
-        Util.limpar(ebs_jTxtid_fornecedor, ebs_jCbofk_transportadora, ebs_jChbativo, ebs_jTxtnome_fornecedor, 
-                    ebs_jFmtcelular, ebs_jTxtnome_empresa, ebs_jFmttelefone, ebs_jTxtnome_fant, ebs_jFmtcnpj, 
-                    ebs_jTxtsite_empresa, ebs_jTxtemail, ebs_jTxtendereco, ebs_jTxtnumero, ebs_jTxtbairro, ebs_jTxtcidade,ebs_jCboestado);
+        Util.limpar(ebs_jTxtid_fornecedor, ebs_jCbofk_transportadora, ebs_jChbativo, ebs_jTxtnome_fornecedor,
+                ebs_jFmtcelular, ebs_jTxtnome_empresa, ebs_jFmttelefone, ebs_jTxtnome_fant, ebs_jFmtcnpj,
+                ebs_jTxtsite_empresa, ebs_jTxtemail, ebs_jTxtendereco, ebs_jTxtnumero, ebs_jTxtbairro, ebs_jTxtcidade, ebs_jCboestado);
     }
 
     /**
@@ -416,7 +416,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
 
     private void ebs_jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnExcluirActionPerformed
         int resp = JOptionPane.showConfirmDialog(null, "Confirme exclusão!", "Deletar registro", JOptionPane.YES_OPTION);
-        if (resp == JOptionPane.YES_OPTION) { 
+        if (resp == JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(null, "Exclusão realizada");
             limparCampos();
         } else {
