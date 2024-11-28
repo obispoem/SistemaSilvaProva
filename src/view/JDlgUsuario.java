@@ -269,7 +269,8 @@ public class JDlgUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_ebs_jBtnCancelarActionPerformed
 
     private void ebs_jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnPesquisarActionPerformed
-
+        JDlgUsuarioPesquisar jDlgUP = new JDlgUsuarioPesquisar(null, true);
+        jDlgUP.setVisible(true);
     }//GEN-LAST:event_ebs_jBtnPesquisarActionPerformed
 
     private void ebs_jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnIncluirActionPerformed

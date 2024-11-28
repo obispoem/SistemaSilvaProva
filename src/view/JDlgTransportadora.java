@@ -270,7 +270,8 @@ public class JDlgTransportadora extends javax.swing.JDialog {
     }//GEN-LAST:event_ebs_jBtnCancelarActionPerformed
 
     private void ebs_jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnPesquisarActionPerformed
-
+        JDlgTransportadoraPesquisar jDlgTP = new JDlgTransportadoraPesquisar(null, true);
+        jDlgTP.setVisible(true);
     }//GEN-LAST:event_ebs_jBtnPesquisarActionPerformed
 
     /**

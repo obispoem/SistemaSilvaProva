@@ -435,7 +435,8 @@ public class JDlgFornecedor extends javax.swing.JDialog {
     }//GEN-LAST:event_ebs_jBtnCancelarActionPerformed
 
     private void ebs_jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnPesquisarActionPerformed
-
+        JDlgFornecedorPesquisar jDlgFP = new JDlgFornecedorPesquisar(null, true);
+        jDlgFP.setVisible(true);
     }//GEN-LAST:event_ebs_jBtnPesquisarActionPerformed
 
     /**

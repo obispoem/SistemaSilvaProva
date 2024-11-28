@@ -199,7 +199,8 @@ public class JDlgCategoria extends javax.swing.JDialog {
     }//GEN-LAST:event_ebs_jBtnCancelarActionPerformed
 
     private void ebs_jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnPesquisarActionPerformed
-
+        JDlgCategoriaPesquisar jDlgCP = new JDlgCategoriaPesquisar(null, true);
+        jDlgCP.setVisible(true);
     }//GEN-LAST:event_ebs_jBtnPesquisarActionPerformed
 
     /**

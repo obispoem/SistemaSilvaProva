@@ -271,7 +271,8 @@ public class JDlgProduto extends javax.swing.JDialog {
     }//GEN-LAST:event_ebs_jBtnCancelarActionPerformed
 
     private void ebs_jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnPesquisarActionPerformed
-
+        JDlgProdutoPesquisar jDlgPP = new JDlgProdutoPesquisar(null, true);
+        jDlgPP.setVisible(true);
     }//GEN-LAST:event_ebs_jBtnPesquisarActionPerformed
 
     /**
