@@ -191,6 +191,7 @@ public class JDlgCategoria extends javax.swing.JDialog {
 
     private void ebs_jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnConfirmarActionPerformed
         habilitar(false);
+        limparCampos();
     }//GEN-LAST:event_ebs_jBtnConfirmarActionPerformed
 
     private void ebs_jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnCancelarActionPerformed
