@@ -4,6 +4,9 @@
  */
 package view;
 
+import bean.EbsTransportadora;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import tools.Util;
 
@@ -39,6 +42,86 @@ public class JDlgTransportadora extends javax.swing.JDialog {
         Util.limpar(ebs_jTxtid_transportadora, ebs_jFmtcnpj, ebs_jTxtnome, ebs_jTxtresponsavel, ebs_jTxtemail, ebs_jFmttelefone, ebs_jTxtendereco);
     }
 
+    
+    public EbsTransportadora viewPbean() {
+        EbsTransportadora t = new EbsTransportadora();
+
+        try {
+            // Verificar se o campo ID da transportadora está vazio
+            String idText = ebs_jTxtid_transportadora.getText();
+            if (idText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O ID da transportadora não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o ID da transportadora na Classe
+            t.setEbsIdTransportadora(Util.strToInt(idText));
+
+            // Verificar se o nome da transportadora está vazio
+            String nome = ebs_jTxtnome.getText();
+            if (nome.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O nome da transportadora não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o nome da transportadora na Classe
+            t.setEbsNome(nome);
+
+            // Verificar se o CNPJ está vazio
+            String cnpj = ebs_jFmtcnpj.getText();
+            if (cnpj.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O CNPJ não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o CNPJ da transportadora na Classe
+            t.setEbsCnpj(cnpj);
+
+            // Verificar se o responsável está vazio
+            String responsavel = ebs_jTxtresponsavel.getText();
+            if (responsavel.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O responsável não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o responsável da transportadora na Classe
+            t.setEbsResponsavel(responsavel);
+
+            // Verificar se o email está vazio
+            String email = ebs_jTxtemail.getText();
+            if (email.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O email não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o email da transportadora na Classe
+            t.setEbsEmail(email);
+
+            // Verificar se o telefone está vazio
+            String telefone = ebs_jFmttelefone.getText();
+            if (telefone.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O telefone não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o telefone da transportadora na Classe
+            t.setEbsTelefone(telefone);
+
+            // Verificar se o endereço está vazio
+            String endereco = ebs_jTxtendereco.getText();
+            if (endereco.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O endereço não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o endereço da transportadora na Classe
+            t.setEbsEndereco(endereco);
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao converter valores", "Erro", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(JDlgTransportadora.class.getName()).log(Level.SEVERE, "Erro ao preencher transportadora", ex);
+            return null;
+        }
+        return t;
+    }
+
+    public void beanPview(EbsTransportadora t) {
+        ebs_jTxtid_transportadora.setText(Util.intToStr(t.getEbsIdTransportadora()));
+        ebs_jTxtnome.setText(t.getEbsNome());
+        ebs_jFmtcnpj.setText(t.getEbsCnpj());
+        ebs_jTxtresponsavel.setText(t.getEbsResponsavel());
+        ebs_jTxtemail.setText(t.getEbsEmail());
+        ebs_jFmttelefone.setText(t.getEbsTelefone());
+        ebs_jTxtendereco.setText(t.getEbsEndereco());
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

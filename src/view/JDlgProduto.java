@@ -4,6 +4,10 @@
  */
 package view;
 
+import bean.EbsProduto;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import tools.Util;
 
@@ -38,6 +42,99 @@ public class JDlgProduto extends javax.swing.JDialog {
     private void limparCampos() {
         Util.limpar(ebs_jTxtid_produto, ebs_jCbofk_categoria, ebs_jTxtnome, ebs_jFmtdata_chegada, ebs_jFmtdata_validade, ebs_jTxtvalor, ebs_jTxtestoque);
     }
+    
+    
+    public EbsProduto viewPbean() {
+        EbsProduto p = new EbsProduto();
+
+        try {
+            // Verificar se o campo ID do produto está vazio
+            String idText = ebs_jTxtid_produto.getText();
+            if (idText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O ID do produto não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+            // Adiciona o id do produto na Classe
+            p.setEbsIdProduto(Util.strToInt(idText));
+
+            // Verificar se o nome do produto está vazio
+            String nome = ebs_jTxtnome.getText();
+            if (nome.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O nome do produto não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+            // Adiciona o nome do produto na Classe
+            p.setEbsNome(nome);
+
+            // Verificar se a categoria foi selecionada
+          /* int categoriaSelecionada = ebs_jCbofk_categoria.getSelectedIndex();;
+            if (categoriaSelecionada == 0) {
+                JOptionPane.showMessageDialog(this, "Nenhuma categoria selecionada", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+            // Adiciona a categoria do produto na Classe
+           p.setEbsCategoria(EbsCategoria);*/
+
+            // Verificar se a data de chegada está vazia
+            String dataChegadaText = ebs_jFmtdata_chegada.getText();
+            if (dataChegadaText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "A data de chegada não pode estar vazia", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+            // Cria o formato de data e converte a data de chegada para a classe
+            p.setEbsDataChegada(Util.strToDate(dataChegadaText));
+
+            // Verificar se a data de validade está vazia
+            String dataValidadeText = ebs_jFmtdata_validade.getText();
+            if (dataValidadeText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "A data de validade não pode estar vazia", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+            // Converte a data de validade para a classe
+            p.setEbsDataValidade(Util.strToDate(dataValidadeText));
+
+            // Verificar se o valor está vazio
+            String valorText = ebs_jTxtvalor.getText();
+            if (valorText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O valor do produto não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+            // Adiciona o valor do produto na Classe
+            p.setEbsValor(Double.parseDouble(valorText));
+
+            // Verificar se o estoque está vazio
+            String estoqueText = ebs_jTxtestoque.getText();
+            if (estoqueText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O estoque do produto não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+            // Adiciona o estoque do produto na Classe
+            p.setEbsEstoque(Integer.parseInt(estoqueText));
+
+        }catch (NumberFormatException | ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao converter valores", "Erro", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(JDlgUsuario.class.getName()).log(Level.SEVERE, "Erro ao preencher usuário", ex);
+            return null;
+        }
+        return p;
+    }
+
+    // Método para preencher a interface gráfica com os valores do Bean Ebs_Produto
+    public void beanPview(EbsProduto p) {
+        ebs_jTxtid_produto.setText(String.valueOf(p.getEbsIdProduto()));
+        ebs_jTxtnome.setText(p.getEbsNome());
+
+        // Seleciona a categoria no ComboBox baseado no valor do Bean
+        //ebs_jCbofk_categoria.setSelectedIndex(p.getEbsCategoria());
+
+        // Define o formato de data para exibição na interface
+        ebs_jFmtdata_chegada.setText(Util.dateToStr(p.getEbsDataChegada()));
+        ebs_jFmtdata_validade.setText(Util.dateToStr(p.getEbsDataValidade()));
+
+        ebs_jTxtvalor.setText(Util.doubleToStr(p.getEbsValor()));
+        ebs_jTxtestoque.setText(Util.intToStr(p.getEbsEstoque()));
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

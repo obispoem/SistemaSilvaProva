@@ -4,6 +4,9 @@
  */
 package view;
 
+import bean.EbsCategoria;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import tools.Util;
 
@@ -36,6 +39,42 @@ public class JDlgCategoria extends javax.swing.JDialog {
 
     private void limparCampos() {
         Util.limpar(ebs_jTxtid_categoria, ebs_jTxtnome);
+    }
+    
+    
+     public EbsCategoria viewPbean() {
+        EbsCategoria c = new EbsCategoria();
+
+        try {
+            // Verificar se o campo ID da categoria está vazio
+            String idText = ebs_jTxtid_categoria.getText();
+            if (idText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O ID da categoria não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+            // Adiciona o id da categoria na Classe
+            c.setEbsIdCategoria(Util.strToInt(idText));
+
+            // Verificar se o nome da categoria está vazio
+            String nome = ebs_jTxtnome.getText();
+            if (nome.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O nome da categoria não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+            // Adiciona o nome da categoria na Classe
+            c.setEbsNome(nome);
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao converter valores", "Erro", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(JDlgCategoria.class.getName()).log(Level.SEVERE, "Erro ao preencher categoria", ex);
+            return null;
+        }
+        return c;
+    }
+
+    public void beanPview(EbsCategoria c) {
+        ebs_jTxtid_categoria.setText(Util.intToStr(c.getEbsIdCategoria()));
+        ebs_jTxtnome.setText(c.getEbsNome());
     }
 
     /**

@@ -54,7 +54,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
         Util.limpar(ebs_jTxtid_usuario,ebs_jTxtnome,ebs_jTxtapelido,ebs_jFmtcpf,ebs_jFmtdata_nasc,ebs_jPwfsenha,ebs_jCbonivel,ebs_jChbativo);
     }
 
-    private EbsUsuario viewbean() throws ParseException {
+    private EbsUsuario viewbean(){
         // instaciando a classe
         EbsUsuario u = new EbsUsuario();
 

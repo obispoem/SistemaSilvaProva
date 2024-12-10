@@ -4,6 +4,9 @@
  */
 package view;
 
+import bean.EbsFornecedor;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import tools.Util;
 
@@ -25,7 +28,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
     }
 
     private void habilitar(boolean status) {
-      if (status) {
+        if (status) {
             Util.habilitar(true, ebs_jTxtid_fornecedor, ebs_jCbofk_transportadora, ebs_jChbativo, ebs_jTxtnome_fornecedor,
                     ebs_jFmtcelular, ebs_jTxtnome_empresa, ebs_jFmttelefone, ebs_jTxtnome_fant, ebs_jFmtcnpj,
                     ebs_jTxtsite_empresa, ebs_jTxtemail, ebs_jTxtendereco, ebs_jTxtnumero, ebs_jTxtbairro, ebs_jTxtcidade,
@@ -44,6 +47,160 @@ public class JDlgFornecedor extends javax.swing.JDialog {
         Util.limpar(ebs_jTxtid_fornecedor, ebs_jCbofk_transportadora, ebs_jChbativo, ebs_jTxtnome_fornecedor,
                 ebs_jFmtcelular, ebs_jTxtnome_empresa, ebs_jFmttelefone, ebs_jTxtnome_fant, ebs_jFmtcnpj,
                 ebs_jTxtsite_empresa, ebs_jTxtemail, ebs_jTxtendereco, ebs_jTxtnumero, ebs_jTxtbairro, ebs_jTxtcidade, ebs_jCboestado);
+    }
+
+    public EbsFornecedor viewPbean() {
+        EbsFornecedor f = new EbsFornecedor();
+
+        try {
+            // Verificar se o campo ID do fornecedor está vazio
+            String idText = ebs_jTxtid_fornecedor.getText();
+            if (idText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O ID do fornecedor não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o ID do fornecedor na Classe
+            f.setEbsIdFornecedor(Util.strToInt(idText));
+
+            /* // Verificar se o campo transportadora foi selecionado
+             int fkTransportadora = ebs_jCbofk_transportadora.getSelectedIndex();
+             if (fkTransportadora == 0) {
+             JOptionPane.showMessageDialog(this, "Nenhuma transportadora selecionada", "Erro", JOptionPane.ERROR_MESSAGE);
+             return null;
+             } // Adiciona a FK da transportadora na Classe
+             f.setEbsTransportadora(EbsTransportadora);*/
+            
+            // Definir se o fornecedor está ativo e adicionar na classe            
+            f.setEbsAtivo(ebs_jChbativo.isSelected() ? "s" : "n");
+
+            // Verificar se o nome do fornecedor está vazio
+            String nomeFornecedor = ebs_jTxtnome_fornecedor.getText();
+            if (nomeFornecedor.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O nome do fornecedor não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o nome do fornecedor na Classe
+            f.setEbsNomeFornecedor(nomeFornecedor);
+
+            // Verificar se o celular está vazio
+            String celular = ebs_jFmtcelular.getText();
+            if (celular.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O celular não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o celular do fornecedor na Classe
+            f.setEbsCelular(celular);
+
+            // Verificar se o nome da empresa está vazio
+            String nomeEmpresa = ebs_jTxtnome_empresa.getText();
+            if (nomeEmpresa.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O nome da empresa não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o nome da empresa na Classe
+            f.setEbsNomeEmpresa(nomeEmpresa);
+
+            // Verificar se o telefone está vazio
+            String telefone = ebs_jFmttelefone.getText();
+            if (telefone.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O telefone não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o telefone do fornecedor na Classe
+            f.setEbsTelefone(telefone);
+
+            // Verificar se o nome fantasia está vazio
+            String nomeFantasia = ebs_jTxtnome_fant.getText();
+            if (nomeFantasia.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O nome fantasia não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o nome fantasia na Classe
+            f.setEbsNomeFant(nomeFantasia);
+
+            // Verificar se o CNPJ está vazio
+            String cnpj = ebs_jFmtcnpj.getText();
+            if (cnpj.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O CNPJ não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o CNPJ do fornecedor na Classe
+            f.setEbsCnpj(cnpj);
+
+            // Verificar se o site da empresa está vazio
+            String siteEmpresa = ebs_jTxtsite_empresa.getText();
+            if (siteEmpresa.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O site da empresa não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o site da empresa na Classe
+            f.setEbsSiteEmpresa(siteEmpresa);
+
+            // Verificar se o email está vazio
+            String email = ebs_jTxtemail.getText();
+            if (email.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O email não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o email do fornecedor na Classe
+            f.setEbsEmail(email);
+
+            // Verificar se o endereço está vazio
+            String endereco = ebs_jTxtendereco.getText();
+            if (endereco.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O endereço não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o endereço na Classe
+            f.setEbsEndereco(endereco);
+
+            // Verificar se o número está vazio
+            String numero = ebs_jTxtnumero.getText();
+            if (numero.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O número não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o número na Classe
+            f.setEbsNumero(numero);
+
+            // Verificar se o bairro está vazio
+            String bairro = ebs_jTxtbairro.getText();
+            if (bairro.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O bairro não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o bairro na Classe
+            f.setEbsBairro(bairro);
+
+            // Verificar se a cidade está vazia
+            String cidade = ebs_jTxtcidade.getText();
+            if (cidade.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "A cidade não pode estar vazia", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona a cidade na Classe
+            f.setEbsCidade(cidade);
+
+            // Verificar se o estado foi selecionado
+            int estadoSelecionado = ebs_jCboestado.getSelectedIndex();
+            if (estadoSelecionado == 0) {
+                JOptionPane.showMessageDialog(this, "Nenhum estado selecionado", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o estado na Classe
+            f.setEbsEstado(ebs_jCboestado.getSelectedItem().toString());
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao converter valores", "Erro", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(JDlgFornecedor.class.getName()).log(Level.SEVERE, "Erro ao preencher fornecedor", ex);
+            return null;
+        }
+        return f;
+    }
+
+    public void beanPview(EbsFornecedor f) {
+        ebs_jTxtid_fornecedor.setText(String.valueOf(f.getEbsIdFornecedor()));
+        //ebs_jCbofk_transportadora.setSelectedIndex(f.getEbsTransportadora());
+        ebs_jChbativo.setSelected("s".equals(f.getEbsAtivo()));
+        ebs_jTxtnome_fornecedor.setText(f.getEbsNomeFornecedor());
+        ebs_jFmtcelular.setText(f.getEbsCelular());
+        ebs_jTxtnome_empresa.setText(f.getEbsNomeEmpresa());
+        ebs_jFmttelefone.setText(f.getEbsTelefone());
+        ebs_jTxtnome_fant.setText(f.getEbsNomeFant());
+        ebs_jFmtcnpj.setText(f.getEbsCnpj());
+        ebs_jTxtsite_empresa.setText(f.getEbsSiteEmpresa());
+        ebs_jTxtemail.setText(f.getEbsEmail());
+        ebs_jTxtendereco.setText(f.getEbsEndereco());
+        ebs_jTxtnumero.setText(f.getEbsNumero());
+        ebs_jTxtbairro.setText(f.getEbsBairro());
+        ebs_jTxtcidade.setText(f.getEbsCidade());
+        ebs_jCboestado.setSelectedItem(f.getEbsEstado());
     }
 
     /**
