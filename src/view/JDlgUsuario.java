@@ -4,7 +4,13 @@
  */
 package view;
 
+import bean.EbsUsuario;
+import java.sql.Date;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.text.MaskFormatter;
 import tools.Util;
 
 /**
@@ -16,6 +22,16 @@ public class JDlgUsuario extends javax.swing.JDialog {
     /**
      * Creates new form jDlgUsuario
      */
+    private static final int NIVEL_NAO_DEFINIDO = 0;
+    private static final int NIVEL_BAIXO = 1;
+    private static final int NIVEL_MEDIO = 2;
+    private static final int NIVEL_ALTO = 3;
+
+    boolean incluir;
+    boolean pesquisar;
+    MaskFormatter maskData;
+    MaskFormatter maskCpf;
+
     public JDlgUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -38,6 +54,92 @@ public class JDlgUsuario extends javax.swing.JDialog {
         Util.limpar(ebs_jTxtid_usuario,ebs_jTxtnome,ebs_jTxtapelido,ebs_jFmtcpf,ebs_jFmtdata_nasc,ebs_jPwfsenha,ebs_jCbonivel,ebs_jChbativo);
     }
 
+    private EbsUsuario viewbean() throws ParseException {
+        // instaciando a classe
+        EbsUsuario u = new EbsUsuario();
+
+        try {
+            // Verificar se o campo ID do usuário está vazio
+            String idText = ebs_jTxtid_usuario.getText();
+            if (idText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O ID do usuário não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o id do usuario na Classe
+            u.setEbsIdUsuario(Util.strToInt(idText));
+
+            // Verificar se o nome do usuário está vazio
+            String nome = ebs_jTxtnome.getText();
+            if (nome.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O nome do usuário não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o nome do usuario na Classe
+            u.setEbsNome(nome);
+
+            // Verificar se o apelido do usuário está vazio
+            String apelido = ebs_jTxtapelido.getText();
+            if (apelido.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O apelido do usuário não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o apelido do usuario na Classe
+            u.setEbsApelido(apelido);
+
+            // Verificar se o CPF está vazio
+            String cpf = ebs_jFmtcpf.getText();
+            if (cpf.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O CPF não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o cpf do usuario na Classe
+            u.setEbsCpf(cpf);
+
+            // Verificar se a data de nascimento está vazia
+            String dataNascText = ebs_jFmtdata_nasc.getText();
+            if (dataNascText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "A data de nascimento não pode estar vazia", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona a data de nascimento do usuario na Classe
+            u.setEbsDataNasc(Util.strToDate(dataNascText));
+
+            // Verificar se a senha está vazia
+            String senha = new String(ebs_jPwfsenha.getPassword());
+            if (senha.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "A senha não pode estar vazia", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona a senha do usuario na Classe
+            u.setEbsSenha(senha);
+
+            // Verificar se o nível foi selecionado
+            int nivelSelecionado = ebs_jCbonivel.getSelectedIndex();
+            if (nivelSelecionado == NIVEL_NAO_DEFINIDO) {
+                JOptionPane.showMessageDialog(this, "Não selecionado nível", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona o nivel do usuario na Classe
+            u.setEbsNivel(nivelSelecionado);
+
+            // Definir se o usuário está ativo e adiciona na classe
+            u.setEbsAtivo(ebs_jChbativo.isSelected() ? "s" : "n");
+
+        } catch (NumberFormatException | ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao converter valores", "Erro", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(JDlgUsuario.class.getName()).log(Level.SEVERE, "Erro ao preencher usuário", ex);
+            return null;
+        }
+        return u;
+    }
+
+    private void beanview(EbsUsuario u) {
+        ebs_jTxtid_usuario.setText(Util.intToStr(u.getEbsIdUsuario()));
+        ebs_jTxtnome.setText(u.getEbsNome());
+        ebs_jTxtapelido.setText(u.getEbsApelido());
+        ebs_jFmtcpf.setText(u.getEbsCpf());
+        ebs_jFmtdata_nasc.setText(Util.dateToStr((Date) u.getEbsDataNasc()));
+        ebs_jPwfsenha.setText(u.getEbsSenha());
+        ebs_jCbonivel.setSelectedIndex(u.getEbsNivel());
+        ebs_jChbativo.setSelected("s".equals(u.getEbsAtivo()));
+    }
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -25,34 +25,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
     }
 
     private void habilitar(boolean status) {
-        // Habilitar ou desabilitar campos de entrada
-        ebs_jTxtid_fornecedor.setEnabled(status);
-        ebs_jCbofk_transportadora.setEnabled(status);
-        ebs_jChbativo.setEnabled(status);
-        ebs_jTxtnome_fornecedor.setEnabled(status);
-        ebs_jFmtcelular.setEnabled(status);
-        ebs_jTxtnome_empresa.setEnabled(status);
-        ebs_jFmttelefone.setEnabled(status);
-        ebs_jTxtnome_fant.setEnabled(status);
-        ebs_jFmtcnpj.setEnabled(status);
-        ebs_jTxtsite_empresa.setEnabled(status);
-        ebs_jTxtemail.setEnabled(status);
-        ebs_jTxtendereco.setEnabled(status);
-        ebs_jTxtnumero.setEnabled(status);
-        ebs_jTxtbairro.setEnabled(status);
-        ebs_jTxtcidade.setEnabled(status);
-        ebs_jCboestado.setEnabled(status);
-
-        // Habilitar ou desabilitar botões
-        ebs_jBtnIncluir.setEnabled(!status);
-        ebs_jBtnAlterar.setEnabled(!status);
-        ebs_jBtnPesquisar.setEnabled(!status);
-        ebs_jBtnExcluir.setEnabled(!status);
-
-        ebs_jBtnCancelar.setEnabled(status);
-        ebs_jBtnConfirmar.setEnabled(status);
-
-        if (status) {
+      if (status) {
             Util.habilitar(true, ebs_jTxtid_fornecedor, ebs_jCbofk_transportadora, ebs_jChbativo, ebs_jTxtnome_fornecedor,
                     ebs_jFmtcelular, ebs_jTxtnome_empresa, ebs_jFmttelefone, ebs_jTxtnome_fant, ebs_jFmtcnpj,
                     ebs_jTxtsite_empresa, ebs_jTxtemail, ebs_jTxtendereco, ebs_jTxtnumero, ebs_jTxtbairro, ebs_jTxtcidade,
