@@ -7,11 +7,16 @@ package tools;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -68,10 +73,48 @@ public class Util {
         JOptionPane.showMessageDialog(null, mensagem);
     }
 
-    public static boolean perguntar(String mensagem) {
-        int resp = JOptionPane.showConfirmDialog(null, mensagem);
+    public static boolean perguntar(String mensagem, String titulo) {
+        int resp = JOptionPane.showConfirmDialog(null, mensagem, titulo, JOptionPane.YES_OPTION);
         return resp == JOptionPane.YES_OPTION;
     }
-    
-}
 
+    public static void maskCPF(JFormattedTextField campo){
+        MaskFormatter mask = null;
+        try {
+            mask = new MaskFormatter("###.###.###-##");
+        } catch (ParseException ex) {
+            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        campo.setFormatterFactory(new DefaultFormatterFactory(mask));
+    }
+
+    public static void maskData(JFormattedTextField campo) {
+        MaskFormatter mask = null;
+        try {
+            mask = new MaskFormatter("##/##/####");
+        } catch (ParseException ex) {
+            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        campo.setFormatterFactory(new DefaultFormatterFactory(mask));
+    }
+
+    public static void maskTelefone(JFormattedTextField campo) {
+        MaskFormatter mask = null;
+        try {
+            mask = new MaskFormatter("(##)#####-####");
+        } catch (ParseException ex) {
+            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        campo.setFormatterFactory(new DefaultFormatterFactory(mask));
+    }
+
+    public static void maskCNPJ(JFormattedTextField campo) {
+        MaskFormatter mask = null;
+        try {
+            mask = new MaskFormatter("##.###.###/####-##");
+        } catch (ParseException ex) {
+            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        campo.setFormatterFactory(new DefaultFormatterFactory(mask));
+    }
+}

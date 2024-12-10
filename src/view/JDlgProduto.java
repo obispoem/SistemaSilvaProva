@@ -4,7 +4,10 @@
  */
 package view;
 
+import bean.EbsCategoria;
 import bean.EbsProduto;
+import dao.DAOgeneric;
+import java.sql.Date;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,12 +23,18 @@ public class JDlgProduto extends javax.swing.JDialog {
     /**
      * Creates new form jDlgUsuario
      */
+    boolean incluir;
+    boolean pesquisar;
+
     public JDlgProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setTitle("Produto");
         setLocationRelativeTo(null);
         habilitar(false);
+
+        Util.maskData(ebs_jFmtdata_chegada);
+        Util.maskData(ebs_jFmtdata_validade);
 
     }
 
@@ -42,9 +51,8 @@ public class JDlgProduto extends javax.swing.JDialog {
     private void limparCampos() {
         Util.limpar(ebs_jTxtid_produto, ebs_jCbofk_categoria, ebs_jTxtnome, ebs_jFmtdata_chegada, ebs_jFmtdata_validade, ebs_jTxtvalor, ebs_jTxtestoque);
     }
-    
-    
-    public EbsProduto viewPbean() {
+
+    public EbsProduto viewbean() {
         EbsProduto p = new EbsProduto();
 
         try {
@@ -66,14 +74,18 @@ public class JDlgProduto extends javax.swing.JDialog {
             // Adiciona o nome do produto na Classe
             p.setEbsNome(nome);
 
-            // Verificar se a categoria foi selecionada
-          /* int categoriaSelecionada = ebs_jCbofk_categoria.getSelectedIndex();;
-            if (categoriaSelecionada == 0) {
-                JOptionPane.showMessageDialog(this, "Nenhuma categoria selecionada", "Erro", JOptionPane.ERROR_MESSAGE);
-                return null;
-            }
-            // Adiciona a categoria do produto na Classe
-           p.setEbsCategoria(EbsCategoria);*/
+            /*    // Verificar se a categoria foi selecionada
+             int categoriaSelecionada = ebs_jCbofk_categoria.getSelectedIndex();;
+             if (categoriaSelecionada == 0) {
+             JOptionPane.showMessageDialog(this, "Nenhuma categoria selecionada", "Erro", JOptionPane.ERROR_MESSAGE);
+             return null;
+             }*/
+            // gambiarra pra funcionar
+            EbsCategoria c = new EbsCategoria();
+            c.setEbsIdCategoria(1);
+            c.setEbsNome("Seco");
+            // Adiciona a categoria do  produto na Classe
+            p.setEbsCategoria(c);
 
             // Verificar se a data de chegada está vazia
             String dataChegadaText = ebs_jFmtdata_chegada.getText();
@@ -111,7 +123,7 @@ public class JDlgProduto extends javax.swing.JDialog {
             // Adiciona o estoque do produto na Classe
             p.setEbsEstoque(Integer.parseInt(estoqueText));
 
-        }catch (NumberFormatException | ParseException ex) {
+        } catch (NumberFormatException | ParseException ex) {
             JOptionPane.showMessageDialog(this, "Erro ao converter valores", "Erro", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(JDlgUsuario.class.getName()).log(Level.SEVERE, "Erro ao preencher usuário", ex);
             return null;
@@ -120,21 +132,19 @@ public class JDlgProduto extends javax.swing.JDialog {
     }
 
     // Método para preencher a interface gráfica com os valores do Bean Ebs_Produto
-    public void beanPview(EbsProduto p) {
+    public void beanview(EbsProduto p) {
         ebs_jTxtid_produto.setText(String.valueOf(p.getEbsIdProduto()));
         ebs_jTxtnome.setText(p.getEbsNome());
 
-        // Seleciona a categoria no ComboBox baseado no valor do Bean
+        // Seleciona a categoria no ComboBox baseado no valor do Bean        
+        ebs_jCbofk_categoria.setSelectedItem(p.getEbsCategoria());
+
         //ebs_jCbofk_categoria.setSelectedIndex(p.getEbsCategoria());
-
-        // Define o formato de data para exibição na interface
-        ebs_jFmtdata_chegada.setText(Util.dateToStr(p.getEbsDataChegada()));
-        ebs_jFmtdata_validade.setText(Util.dateToStr(p.getEbsDataValidade()));
-
+        ebs_jFmtdata_chegada.setText(Util.dateToStr((Date) p.getEbsDataChegada()));
+        ebs_jFmtdata_validade.setText(Util.dateToStr((Date) p.getEbsDataValidade()));
         ebs_jTxtvalor.setText(Util.doubleToStr(p.getEbsValor()));
         ebs_jTxtestoque.setText(Util.intToStr(p.getEbsEstoque()));
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -341,28 +351,50 @@ public class JDlgProduto extends javax.swing.JDialog {
     private void ebs_jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnIncluirActionPerformed
         habilitar(true);
         limparCampos();
+        incluir = true;
     }//GEN-LAST:event_ebs_jBtnIncluirActionPerformed
 
     private void ebs_jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnAlterarActionPerformed
+        if (pesquisar == false) {
+            //INSTACIAR TELA
+            JDlgProdutoPesquisar jDlgPP = new JDlgProdutoPesquisar(null, true);
+            jDlgPP.setVisible(true);
+        }
         habilitar(true);
+        Util.habilitar(false, ebs_jTxtid_produto);
+        incluir = false;
+        pesquisar = false;
     }//GEN-LAST:event_ebs_jBtnAlterarActionPerformed
 
     private void ebs_jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnExcluirActionPerformed
-        int resp = JOptionPane.showConfirmDialog(null, "Confirme exclusão!", "Deletar registro", JOptionPane.YES_OPTION);
-        if (resp == JOptionPane.YES_OPTION) {
+        if (pesquisar == false) {
+            JDlgProdutoPesquisar jDlgPP = new JDlgProdutoPesquisar(null, true);
+            jDlgPP.setVisible(true);
+        }
+        if (Util.perguntar("Confirme exclusão!", "Deletar registro")) {
+            DAOgeneric dao = new DAOgeneric();
+            dao.delete(viewbean());
             JOptionPane.showMessageDialog(null, "Exclusão realizada");
             limparCampos();
         } else {
             JOptionPane.showMessageDialog(null, "Exclusão cancelada");
             habilitar(false);
         }
+        pesquisar = false;
     }//GEN-LAST:event_ebs_jBtnExcluirActionPerformed
 
     private void ebs_jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnConfirmarActionPerformed
+        DAOgeneric dao = new DAOgeneric();
+        if (incluir == true) {
+            dao.insert(viewbean());
+        } else {
+            dao.update(viewbean());
+        }
         habilitar(false);
     }//GEN-LAST:event_ebs_jBtnConfirmarActionPerformed
 
     private void ebs_jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnCancelarActionPerformed
+        incluir = false;
         habilitar(false);
         limparCampos();
     }//GEN-LAST:event_ebs_jBtnCancelarActionPerformed

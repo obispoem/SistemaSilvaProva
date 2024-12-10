@@ -5,6 +5,7 @@
 package view;
 
 import bean.EbsCategoria;
+import dao.DAOgeneric;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -19,6 +20,9 @@ public class JDlgCategoria extends javax.swing.JDialog {
     /**
      * Creates new form jDlgUsuario
      */
+    boolean incluir;
+    boolean pesquisar;
+
     public JDlgCategoria(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -40,9 +44,8 @@ public class JDlgCategoria extends javax.swing.JDialog {
     private void limparCampos() {
         Util.limpar(ebs_jTxtid_categoria, ebs_jTxtnome);
     }
-    
-    
-     public EbsCategoria viewPbean() {
+
+    public EbsCategoria viewbean() {
         EbsCategoria c = new EbsCategoria();
 
         try {
@@ -72,7 +75,7 @@ public class JDlgCategoria extends javax.swing.JDialog {
         return c;
     }
 
-    public void beanPview(EbsCategoria c) {
+    public void beanview(EbsCategoria c) {
         ebs_jTxtid_categoria.setText(Util.intToStr(c.getEbsIdCategoria()));
         ebs_jTxtnome.setText(c.getEbsNome());
     }
@@ -211,29 +214,50 @@ public class JDlgCategoria extends javax.swing.JDialog {
     private void ebs_jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnIncluirActionPerformed
         habilitar(true);
         limparCampos();
+        incluir = true;
     }//GEN-LAST:event_ebs_jBtnIncluirActionPerformed
 
     private void ebs_jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnAlterarActionPerformed
+        if (pesquisar == false) {
+            //INSTACIAR TELA
+            JDlgCategoriaPesquisar jDlgCP = new JDlgCategoriaPesquisar(null, true);
+            jDlgCP.setVisible(true);
+        }
         habilitar(true);
+        Util.habilitar(false, ebs_jTxtid_categoria);
+        incluir = false;
+        pesquisar = false;
     }//GEN-LAST:event_ebs_jBtnAlterarActionPerformed
 
     private void ebs_jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnExcluirActionPerformed
-        int resp = JOptionPane.showConfirmDialog(null, "Confirme exclusão!", "Deletar registro", JOptionPane.YES_OPTION);
-        if (resp == JOptionPane.YES_OPTION) {
+        if (pesquisar == false) {
+            JDlgCategoriaPesquisar jDlgCP = new JDlgCategoriaPesquisar(null, true);
+            jDlgCP.setVisible(true);
+        }
+        if (Util.perguntar("Confirme exclusão!", "Deletar registro")) {
+            DAOgeneric dao = new DAOgeneric();
+            dao.delete(viewbean());
             JOptionPane.showMessageDialog(null, "Exclusão realizada");
             limparCampos();
         } else {
             JOptionPane.showMessageDialog(null, "Exclusão cancelada");
             habilitar(false);
         }
+        pesquisar = false;
     }//GEN-LAST:event_ebs_jBtnExcluirActionPerformed
 
     private void ebs_jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnConfirmarActionPerformed
+        DAOgeneric dao = new DAOgeneric();
+        if (incluir == true) {
+            dao.insert(viewbean());
+        } else {
+            dao.update(viewbean());
+        }
         habilitar(false);
-        limparCampos();
     }//GEN-LAST:event_ebs_jBtnConfirmarActionPerformed
 
     private void ebs_jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnCancelarActionPerformed
+        incluir = false;
         habilitar(false);
         limparCampos();
     }//GEN-LAST:event_ebs_jBtnCancelarActionPerformed

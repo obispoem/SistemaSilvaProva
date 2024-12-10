@@ -5,12 +5,12 @@
 package view;
 
 import bean.EbsUsuario;
+import dao.DAOgeneric;
 import java.sql.Date;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.text.MaskFormatter;
 import tools.Util;
 
 /**
@@ -29,8 +29,6 @@ public class JDlgUsuario extends javax.swing.JDialog {
 
     boolean incluir;
     boolean pesquisar;
-    MaskFormatter maskData;
-    MaskFormatter maskCpf;
 
     public JDlgUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -38,23 +36,26 @@ public class JDlgUsuario extends javax.swing.JDialog {
         setTitle("Usuario");
         setLocationRelativeTo(null);
         habilitar(false);
-
+        
+        Util.maskCPF(ebs_jFmtcpf);
+        Util.maskData(ebs_jFmtdata_nasc);
     }
 
     private void habilitar(boolean status) {
         if (status) {
             Util.habilitar(true, ebs_jTxtid_usuario, ebs_jTxtnome, ebs_jTxtapelido, ebs_jFmtcpf, ebs_jFmtdata_nasc, ebs_jPwfsenha, ebs_jCbonivel, ebs_jChbativo, ebs_jBtnCancelar, ebs_jBtnConfirmar);
             Util.habilitar(false, ebs_jBtnIncluir, ebs_jBtnAlterar, ebs_jBtnPesquisar, ebs_jBtnExcluir);
-        }else{
+        } else {
             Util.habilitar(false, ebs_jTxtid_usuario, ebs_jTxtnome, ebs_jTxtapelido, ebs_jFmtcpf, ebs_jFmtdata_nasc, ebs_jPwfsenha, ebs_jCbonivel, ebs_jChbativo, ebs_jBtnCancelar, ebs_jBtnConfirmar);
             Util.habilitar(true, ebs_jBtnIncluir, ebs_jBtnAlterar, ebs_jBtnPesquisar, ebs_jBtnExcluir);
         }
     }
+
     private void limparCampos() {
-        Util.limpar(ebs_jTxtid_usuario,ebs_jTxtnome,ebs_jTxtapelido,ebs_jFmtcpf,ebs_jFmtdata_nasc,ebs_jPwfsenha,ebs_jCbonivel,ebs_jChbativo);
+        Util.limpar(ebs_jTxtid_usuario, ebs_jTxtnome, ebs_jTxtapelido, ebs_jFmtcpf, ebs_jFmtdata_nasc, ebs_jPwfsenha, ebs_jCbonivel, ebs_jChbativo);
     }
 
-    private EbsUsuario viewbean(){
+    private EbsUsuario viewbean() {
         // instaciando a classe
         EbsUsuario u = new EbsUsuario();
 
@@ -136,10 +137,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
         ebs_jCbonivel.setSelectedIndex(u.getEbsNivel());
         ebs_jChbativo.setSelected("s".equals(u.getEbsAtivo()));
     }
-    
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -360,12 +358,12 @@ public class JDlgUsuario extends javax.swing.JDialog {
     private void ebs_jTxtid_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jTxtid_usuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ebs_jTxtid_usuarioActionPerformed
-
     private void ebs_jFmtdata_nascActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jFmtdata_nascActionPerformed
 
     }//GEN-LAST:event_ebs_jFmtdata_nascActionPerformed
 
     private void ebs_jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnCancelarActionPerformed
+        incluir = false;
         habilitar(false);
         limparCampos();
     }//GEN-LAST:event_ebs_jBtnCancelarActionPerformed
@@ -378,25 +376,45 @@ public class JDlgUsuario extends javax.swing.JDialog {
     private void ebs_jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnIncluirActionPerformed
         habilitar(true);
         limparCampos();
+        incluir = true;
     }//GEN-LAST:event_ebs_jBtnIncluirActionPerformed
 
     private void ebs_jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnAlterarActionPerformed
-
+        if (pesquisar == false) {
+            //INSTACIAR TELA
+            JDlgUsuarioPesquisar jDlgUP = new JDlgUsuarioPesquisar(null, true);
+            jDlgUP.setVisible(true);
+        }
         habilitar(true);
+        Util.habilitar(false, ebs_jTxtid_usuario);
+        incluir = false;
+        pesquisar = false;
     }//GEN-LAST:event_ebs_jBtnAlterarActionPerformed
 
     private void ebs_jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnExcluirActionPerformed
-        int resp = JOptionPane.showConfirmDialog(null, "Confirme exclusão!", "Deletar registro", JOptionPane.YES_OPTION);
-        if (resp == JOptionPane.YES_OPTION) {
+        if (pesquisar == false) {
+            JDlgUsuarioPesquisar jDlgUP = new JDlgUsuarioPesquisar(null, true);
+            jDlgUP.setVisible(true);
+        }
+        if (Util.perguntar("Confirme exclusão!", "Deletar registro")) {
+            DAOgeneric dao = new DAOgeneric();
+            dao.delete(viewbean());
             JOptionPane.showMessageDialog(null, "Exclusão realizada");
             limparCampos();
         } else {
             JOptionPane.showMessageDialog(null, "Exclusão cancelada");
             habilitar(false);
         }
+        pesquisar = false;
     }//GEN-LAST:event_ebs_jBtnExcluirActionPerformed
 
     private void ebs_jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnConfirmarActionPerformed
+        DAOgeneric dao = new DAOgeneric();
+        if (incluir == true) {
+            dao.insert(viewbean());
+        } else {
+            dao.update(viewbean());
+        }
         habilitar(false);
     }//GEN-LAST:event_ebs_jBtnConfirmarActionPerformed
 

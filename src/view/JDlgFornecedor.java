@@ -5,6 +5,8 @@
 package view;
 
 import bean.EbsFornecedor;
+import bean.EbsTransportadora;
+import dao.DAOgeneric;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -19,12 +21,19 @@ public class JDlgFornecedor extends javax.swing.JDialog {
     /**
      * Creates new form jDlgUsuario
      */
+    boolean incluir;
+    boolean pesquisar;
+
     public JDlgFornecedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setTitle("Fornecedor");
         setLocationRelativeTo(null);
         habilitar(false);
+
+        Util.maskCNPJ(ebs_jFmtcnpj);
+        Util.maskTelefone(ebs_jFmttelefone);
+        Util.maskTelefone(ebs_jFmtcelular);
     }
 
     private void habilitar(boolean status) {
@@ -49,7 +58,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
                 ebs_jTxtsite_empresa, ebs_jTxtemail, ebs_jTxtendereco, ebs_jTxtnumero, ebs_jTxtbairro, ebs_jTxtcidade, ebs_jCboestado);
     }
 
-    public EbsFornecedor viewPbean() {
+    public EbsFornecedor viewbean() {
         EbsFornecedor f = new EbsFornecedor();
 
         try {
@@ -67,7 +76,18 @@ public class JDlgFornecedor extends javax.swing.JDialog {
              JOptionPane.showMessageDialog(this, "Nenhuma transportadora selecionada", "Erro", JOptionPane.ERROR_MESSAGE);
              return null;
              } // Adiciona a FK da transportadora na Classe
-             f.setEbsTransportadora(EbsTransportadora);*/
+             f.setEbsFornecedor(EbsTransportadora);*/
+
+            //gambiarra para funcionar e nao funcionou
+            EbsTransportadora t = new EbsTransportadora();
+            t.setEbsIdTransportadora(1);
+            t.setEbsNome("1");
+            t.setEbsCnpj("11.111.111/1111-11");
+            t.setEbsEndereco("1");
+            t.setEbsResponsavel("1");
+            t.setEbsEmail("1");
+            t.setEbsTelefone("(11)11111-1111");
+            f.setEbsTransportadora(t);
             
             // Definir se o fornecedor está ativo e adicionar na classe            
             f.setEbsAtivo(ebs_jChbativo.isSelected() ? "s" : "n");
@@ -184,7 +204,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
         return f;
     }
 
-    public void beanPview(EbsFornecedor f) {
+    public void beanview(EbsFornecedor f) {
         ebs_jTxtid_fornecedor.setText(String.valueOf(f.getEbsIdFornecedor()));
         //ebs_jCbofk_transportadora.setSelectedIndex(f.getEbsTransportadora());
         ebs_jChbativo.setSelected("s".equals(f.getEbsAtivo()));
@@ -529,7 +549,6 @@ public class JDlgFornecedor extends javax.swing.JDialog {
     private void ebs_jTxtnome_empresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jTxtnome_empresaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ebs_jTxtnome_empresaActionPerformed
-
     private void ebs_jCboestadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jCboestadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ebs_jCboestadoActionPerformed
@@ -537,29 +556,50 @@ public class JDlgFornecedor extends javax.swing.JDialog {
     private void ebs_jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnIncluirActionPerformed
         habilitar(true);
         limparCampos();
+        incluir = true;
     }//GEN-LAST:event_ebs_jBtnIncluirActionPerformed
 
     private void ebs_jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnAlterarActionPerformed
-
+        if (pesquisar == false) {
+            //INSTACIAR TELA
+            JDlgFornecedorPesquisar jDlgFP = new JDlgFornecedorPesquisar(null, true);
+            jDlgFP.setVisible(true);
+        }
         habilitar(true);
+        Util.habilitar(false, ebs_jTxtid_fornecedor);
+        incluir = false;
+        pesquisar = false;
     }//GEN-LAST:event_ebs_jBtnAlterarActionPerformed
 
     private void ebs_jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnExcluirActionPerformed
-        int resp = JOptionPane.showConfirmDialog(null, "Confirme exclusão!", "Deletar registro", JOptionPane.YES_OPTION);
-        if (resp == JOptionPane.YES_OPTION) {
+        if (pesquisar == false) {
+            JDlgFornecedorPesquisar jDlgFP = new JDlgFornecedorPesquisar(null, true);
+            jDlgFP.setVisible(true);
+        }
+        if (Util.perguntar("Confirme exclusão!", "Deletar registro")) {
+            DAOgeneric dao = new DAOgeneric();
+            dao.delete(viewbean());
             JOptionPane.showMessageDialog(null, "Exclusão realizada");
             limparCampos();
         } else {
             JOptionPane.showMessageDialog(null, "Exclusão cancelada");
             habilitar(false);
         }
+        pesquisar = false;
     }//GEN-LAST:event_ebs_jBtnExcluirActionPerformed
 
     private void ebs_jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnConfirmarActionPerformed
+        DAOgeneric dao = new DAOgeneric();
+        if (incluir == true) {
+            dao.insert(viewbean());
+        } else {
+            dao.update(viewbean());
+        }
         habilitar(false);
     }//GEN-LAST:event_ebs_jBtnConfirmarActionPerformed
 
     private void ebs_jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnCancelarActionPerformed
+        incluir = false;
         habilitar(false);
         limparCampos();
     }//GEN-LAST:event_ebs_jBtnCancelarActionPerformed

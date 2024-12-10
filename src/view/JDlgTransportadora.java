@@ -5,6 +5,7 @@
 package view;
 
 import bean.EbsTransportadora;
+import dao.DAOgeneric;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -19,6 +20,9 @@ public class JDlgTransportadora extends javax.swing.JDialog {
     /**
      * Creates new form jDlgUsuario
      */
+    boolean incluir;
+    boolean pesquisar;
+
     public JDlgTransportadora(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -26,6 +30,8 @@ public class JDlgTransportadora extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         habilitar(false);
 
+        Util.maskCNPJ(ebs_jFmtcnpj);
+        Util.maskTelefone(ebs_jFmttelefone);
     }
 
     private void habilitar(boolean status) {
@@ -42,8 +48,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
         Util.limpar(ebs_jTxtid_transportadora, ebs_jFmtcnpj, ebs_jTxtnome, ebs_jTxtresponsavel, ebs_jTxtemail, ebs_jFmttelefone, ebs_jTxtendereco);
     }
 
-    
-    public EbsTransportadora viewPbean() {
+    public EbsTransportadora viewbean() {
         EbsTransportadora t = new EbsTransportadora();
 
         try {
@@ -111,7 +116,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
         return t;
     }
 
-    public void beanPview(EbsTransportadora t) {
+    public void beanview(EbsTransportadora t) {
         ebs_jTxtid_transportadora.setText(Util.intToStr(t.getEbsIdTransportadora()));
         ebs_jTxtnome.setText(t.getEbsNome());
         ebs_jFmtcnpj.setText(t.getEbsCnpj());
@@ -121,7 +126,6 @@ public class JDlgTransportadora extends javax.swing.JDialog {
         ebs_jTxtendereco.setText(t.getEbsEndereco());
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -326,28 +330,50 @@ public class JDlgTransportadora extends javax.swing.JDialog {
     private void ebs_jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnIncluirActionPerformed
         habilitar(true);
         limparCampos();
+        incluir = true;
     }//GEN-LAST:event_ebs_jBtnIncluirActionPerformed
 
     private void ebs_jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnAlterarActionPerformed
+        if (pesquisar == false) {
+            //INSTACIAR TELA
+            JDlgTransportadoraPesquisar jDlgTP = new JDlgTransportadoraPesquisar(null, true);
+            jDlgTP.setVisible(true);
+        }
         habilitar(true);
+        Util.habilitar(false, ebs_jTxtid_transportadora);
+        incluir = false;
+        pesquisar = false;
     }//GEN-LAST:event_ebs_jBtnAlterarActionPerformed
 
     private void ebs_jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnExcluirActionPerformed
-        int resp = JOptionPane.showConfirmDialog(null, "Confirme exclusão!", "Deletar registro", JOptionPane.YES_OPTION);
-        if (resp == JOptionPane.YES_OPTION) {
+        if (pesquisar == false) {
+            JDlgTransportadoraPesquisar jDlgTP = new JDlgTransportadoraPesquisar(null, true);
+            jDlgTP.setVisible(true);
+        }
+        if (Util.perguntar("Confirme exclusão!", "Deletar registro")) {
+            DAOgeneric dao = new DAOgeneric();
+            dao.delete(viewbean());
             JOptionPane.showMessageDialog(null, "Exclusão realizada");
             limparCampos();
         } else {
             JOptionPane.showMessageDialog(null, "Exclusão cancelada");
             habilitar(false);
         }
+        pesquisar = false;
     }//GEN-LAST:event_ebs_jBtnExcluirActionPerformed
 
     private void ebs_jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnConfirmarActionPerformed
+        DAOgeneric dao = new DAOgeneric();
+        if (incluir == true) {
+            dao.insert(viewbean());
+        } else {
+            dao.update(viewbean());
+        }
         habilitar(false);
     }//GEN-LAST:event_ebs_jBtnConfirmarActionPerformed
 
     private void ebs_jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnCancelarActionPerformed
+        incluir = false;
         habilitar(false);
         limparCampos();
     }//GEN-LAST:event_ebs_jBtnCancelarActionPerformed
