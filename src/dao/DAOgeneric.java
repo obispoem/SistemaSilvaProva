@@ -5,6 +5,7 @@
  */
 package dao;
 
+import bean.EbsTransportadora;
 import java.util.ArrayList;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -16,7 +17,6 @@ import tools.HibernateUtil;
  *
  * @author bispo
  */
-
 public class DAOgeneric {
 
     public Session session;
@@ -63,10 +63,20 @@ public class DAOgeneric {
         return lista;
     }
     /*
-     public static void main(String[] args) throws ParseException {
+     public static void main(String[] args){
      Session session = HibernateUtil.getSessionFactory().openSession(); // Obtém a sessão do Hibernate
      DAOgeneric dao = new DAOgeneric(); // Instancia o DAO
 
+     EbsTransportadora t = new EbsTransportadora();
+     t.setEbsIdTransportadora(1);
+     t.setEbsNome("1");
+     t.setEbsCnpj("11.111.111/1111-11");
+     t.setEbsEndereco("1");
+     t.setEbsResponsavel("1");
+     t.setEbsEmail("1");
+     t.setEbsTelefone("(11)11111-1111");
+     dao.insert(t);
+        
      ////
      EbsUsuario usuario = (EbsUsuario) dao.list(5, EbsUsuario.class);
 
@@ -113,10 +123,8 @@ public class DAOgeneric {
      System.out.println("ID: " + categoria.getEbsIdCategoria());
      System.out.println("Nome: " + categoria.getEbsNome());
      }
-    
      ////
      session.close();
-     }
-     */
+     }*/
 
 }
