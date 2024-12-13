@@ -23,9 +23,6 @@ public class JDlgUsuario extends javax.swing.JDialog {
      * Creates new form jDlgUsuario
      */
     private static final int NIVEL_NAO_DEFINIDO = 0;
-    private static final int NIVEL_BAIXO = 1;
-    private static final int NIVEL_MEDIO = 2;
-    private static final int NIVEL_ALTO = 3;
 
     boolean incluir;
     boolean pesquisar;
@@ -36,7 +33,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
         setTitle("Usuario");
         setLocationRelativeTo(null);
         habilitar(false);
-        
+
         Util.maskCPF(ebs_jFmtcpf);
         Util.maskData(ebs_jFmtdata_nasc);
     }
@@ -127,7 +124,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
         return u;
     }
 
-    private void beanview(EbsUsuario u) {
+    public void beanview(EbsUsuario u) {
         ebs_jTxtid_usuario.setText(Util.intToStr(u.getEbsIdUsuario()));
         ebs_jTxtnome.setText(u.getEbsNome());
         ebs_jTxtapelido.setText(u.getEbsApelido());
@@ -136,6 +133,15 @@ public class JDlgUsuario extends javax.swing.JDialog {
         ebs_jPwfsenha.setText(u.getEbsSenha());
         ebs_jCbonivel.setSelectedIndex(u.getEbsNivel());
         ebs_jChbativo.setSelected("s".equals(u.getEbsAtivo()));
+    }
+
+    private void telaPesquisar() {
+        pesquisar = true;
+        Class c = EbsUsuario.class;
+        EbsUsuario o = new EbsUsuario();
+        Class ct = JDlgUsuario.class;
+        JDlgPesquisar jDlgP = new JDlgPesquisar(null, true, c, o, ct, this, "Usuario");
+        jDlgP.setVisible(true);
     }
 
     /**
@@ -369,8 +375,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_ebs_jBtnCancelarActionPerformed
 
     private void ebs_jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnPesquisarActionPerformed
-        JDlgUsuarioPesquisar jDlgUP = new JDlgUsuarioPesquisar(null, true);
-        jDlgUP.setVisible(true);
+        telaPesquisar();
     }//GEN-LAST:event_ebs_jBtnPesquisarActionPerformed
 
     private void ebs_jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnIncluirActionPerformed
@@ -382,8 +387,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
     private void ebs_jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnAlterarActionPerformed
         if (pesquisar == false) {
             //INSTACIAR TELA
-            JDlgUsuarioPesquisar jDlgUP = new JDlgUsuarioPesquisar(null, true);
-            jDlgUP.setVisible(true);
+            telaPesquisar();
         }
         habilitar(true);
         Util.habilitar(false, ebs_jTxtid_usuario);
@@ -393,8 +397,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
 
     private void ebs_jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnExcluirActionPerformed
         if (pesquisar == false) {
-            JDlgUsuarioPesquisar jDlgUP = new JDlgUsuarioPesquisar(null, true);
-            jDlgUP.setVisible(true);
+            telaPesquisar();
         }
         if (Util.perguntar("Confirme exclusão!", "Deletar registro")) {
             DAOgeneric dao = new DAOgeneric();
@@ -415,6 +418,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
         } else {
             dao.update(viewbean());
         }
+        limparCampos();
         habilitar(false);
     }//GEN-LAST:event_ebs_jBtnConfirmarActionPerformed
 
@@ -449,17 +453,15 @@ public class JDlgUsuario extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                JDlgUsuario dialog = new JDlgUsuario(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            JDlgUsuario dialog = new JDlgUsuario(new javax.swing.JFrame(), true);
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(true);
         });
     }
 
@@ -486,4 +488,5 @@ public class JDlgUsuario extends javax.swing.JDialog {
     private javax.swing.JTextField ebs_jTxtid_usuario;
     private javax.swing.JTextField ebs_jTxtnome;
     // End of variables declaration//GEN-END:variables
+
 }

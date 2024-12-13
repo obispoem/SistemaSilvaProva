@@ -9,6 +9,7 @@ import bean.EbsProduto;
 import dao.DAOgeneric;
 import java.sql.Date;
 import java.text.ParseException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -35,6 +36,12 @@ public class JDlgProduto extends javax.swing.JDialog {
 
         Util.maskData(ebs_jFmtdata_chegada);
         Util.maskData(ebs_jFmtdata_validade);
+
+        DAOgeneric dao = new DAOgeneric();
+        List lstCategoria = dao.listAll(EbsCategoria.class);
+        for (Object c : lstCategoria) {
+            ebs_jCbofk_categoria.addItem((EbsCategoria) c);
+        }
 
     }
 
@@ -74,17 +81,12 @@ public class JDlgProduto extends javax.swing.JDialog {
             // Adiciona o nome do produto na Classe
             p.setEbsNome(nome);
 
-            /*    // Verificar se a categoria foi selecionada
-             int categoriaSelecionada = ebs_jCbofk_categoria.getSelectedIndex();;
-             if (categoriaSelecionada == 0) {
-             JOptionPane.showMessageDialog(this, "Nenhuma categoria selecionada", "Erro", JOptionPane.ERROR_MESSAGE);
-             return null;
-             }*/
-            // gambiarra pra funcionar
-            EbsCategoria c = new EbsCategoria();
-            c.setEbsIdCategoria(1);
-            c.setEbsNome("Seco");
-            // Adiciona a categoria do  produto na Classe
+            // Verificar se a categoria foi selecionada
+            EbsCategoria c = (EbsCategoria) ebs_jCbofk_categoria.getSelectedItem();
+            if (c == null) {
+                JOptionPane.showMessageDialog(this, "Nenhuma categoria selecionada", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }// Adiciona a categoria do  produto na Classe
             p.setEbsCategoria(c);
 
             // Verificar se a data de chegada está vazia
@@ -131,19 +133,23 @@ public class JDlgProduto extends javax.swing.JDialog {
         return p;
     }
 
-    // Método para preencher a interface gráfica com os valores do Bean Ebs_Produto
+    // Método para preencher a interface com os valores do Bean Ebs_Produto
     public void beanview(EbsProduto p) {
         ebs_jTxtid_produto.setText(String.valueOf(p.getEbsIdProduto()));
         ebs_jTxtnome.setText(p.getEbsNome());
-
-        // Seleciona a categoria no ComboBox baseado no valor do Bean        
         ebs_jCbofk_categoria.setSelectedItem(p.getEbsCategoria());
-
-        //ebs_jCbofk_categoria.setSelectedIndex(p.getEbsCategoria());
         ebs_jFmtdata_chegada.setText(Util.dateToStr((Date) p.getEbsDataChegada()));
         ebs_jFmtdata_validade.setText(Util.dateToStr((Date) p.getEbsDataValidade()));
         ebs_jTxtvalor.setText(Util.doubleToStr(p.getEbsValor()));
         ebs_jTxtestoque.setText(Util.intToStr(p.getEbsEstoque()));
+    }
+
+    private void telaPesquisar() {
+        Class c = EbsProduto.class;
+        EbsProduto o = new EbsProduto();
+        Class ct = JDlgProduto.class;
+        JDlgPesquisar jDlgP = new JDlgPesquisar(null, true, c, o, ct, this, "Produto");
+        jDlgP.setVisible(true);
     }
 
     /**
@@ -168,7 +174,7 @@ public class JDlgProduto extends javax.swing.JDialog {
         ebs_jFmtdata_validade = new javax.swing.JFormattedTextField();
         ebs_jTxtvalor = new javax.swing.JTextField();
         ebs_jTxtestoque = new javax.swing.JTextField();
-        ebs_jCbofk_categoria = new javax.swing.JComboBox<>();
+        ebs_jCbofk_categoria = new javax.swing.JComboBox<EbsCategoria>();
         ebs_jBtnIncluir = new javax.swing.JButton();
         ebs_jBtnAlterar = new javax.swing.JButton();
         ebs_jBtnExcluir = new javax.swing.JButton();
@@ -192,8 +198,6 @@ public class JDlgProduto extends javax.swing.JDialog {
         ebs_jLblValor.setText("Valor");
 
         ebs_jLblEstoque.setText("Estoque");
-
-        ebs_jCbofk_categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Não Definida" }));
 
         ebs_jBtnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add1.png"))); // NOI18N
         ebs_jBtnIncluir.setText("Incluir");
@@ -357,8 +361,7 @@ public class JDlgProduto extends javax.swing.JDialog {
     private void ebs_jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnAlterarActionPerformed
         if (pesquisar == false) {
             //INSTACIAR TELA
-            JDlgProdutoPesquisar jDlgPP = new JDlgProdutoPesquisar(null, true);
-            jDlgPP.setVisible(true);
+            telaPesquisar();
         }
         habilitar(true);
         Util.habilitar(false, ebs_jTxtid_produto);
@@ -368,8 +371,7 @@ public class JDlgProduto extends javax.swing.JDialog {
 
     private void ebs_jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnExcluirActionPerformed
         if (pesquisar == false) {
-            JDlgProdutoPesquisar jDlgPP = new JDlgProdutoPesquisar(null, true);
-            jDlgPP.setVisible(true);
+            telaPesquisar();
         }
         if (Util.perguntar("Confirme exclusão!", "Deletar registro")) {
             DAOgeneric dao = new DAOgeneric();
@@ -390,6 +392,7 @@ public class JDlgProduto extends javax.swing.JDialog {
         } else {
             dao.update(viewbean());
         }
+        limparCampos();
         habilitar(false);
     }//GEN-LAST:event_ebs_jBtnConfirmarActionPerformed
 
@@ -400,8 +403,8 @@ public class JDlgProduto extends javax.swing.JDialog {
     }//GEN-LAST:event_ebs_jBtnCancelarActionPerformed
 
     private void ebs_jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnPesquisarActionPerformed
-        JDlgProdutoPesquisar jDlgPP = new JDlgProdutoPesquisar(null, true);
-        jDlgPP.setVisible(true);
+        pesquisar = true;
+        telaPesquisar();
     }//GEN-LAST:event_ebs_jBtnPesquisarActionPerformed
 
     /**
@@ -463,7 +466,7 @@ public class JDlgProduto extends javax.swing.JDialog {
     private javax.swing.JButton ebs_jBtnExcluir;
     private javax.swing.JButton ebs_jBtnIncluir;
     private javax.swing.JButton ebs_jBtnPesquisar;
-    private javax.swing.JComboBox<String> ebs_jCbofk_categoria;
+    private javax.swing.JComboBox<EbsCategoria> ebs_jCbofk_categoria;
     private javax.swing.JFormattedTextField ebs_jFmtdata_chegada;
     private javax.swing.JFormattedTextField ebs_jFmtdata_validade;
     private javax.swing.JLabel ebs_jLblCodigo;

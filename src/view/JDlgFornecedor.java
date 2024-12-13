@@ -7,6 +7,7 @@ package view;
 import bean.EbsFornecedor;
 import bean.EbsTransportadora;
 import dao.DAOgeneric;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -34,6 +35,13 @@ public class JDlgFornecedor extends javax.swing.JDialog {
         Util.maskCNPJ(ebs_jFmtcnpj);
         Util.maskTelefone(ebs_jFmttelefone);
         Util.maskTelefone(ebs_jFmtcelular);
+
+        DAOgeneric dao = new DAOgeneric();
+        List lstTransportadora = dao.listAll(EbsTransportadora.class);
+        for (Object c : lstTransportadora) {
+            ebs_jCbofk_transportadora.addItem((EbsTransportadora) c);
+        }
+
     }
 
     private void habilitar(boolean status) {
@@ -70,25 +78,14 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             } // Adiciona o ID do fornecedor na Classe
             f.setEbsIdFornecedor(Util.strToInt(idText));
 
-            /* // Verificar se o campo transportadora foi selecionado
-             int fkTransportadora = ebs_jCbofk_transportadora.getSelectedIndex();
-             if (fkTransportadora == 0) {
-             JOptionPane.showMessageDialog(this, "Nenhuma transportadora selecionada", "Erro", JOptionPane.ERROR_MESSAGE);
-             return null;
-             } // Adiciona a FK da transportadora na Classe
-             f.setEbsFornecedor(EbsTransportadora);*/
+            // Verificar se o campo transportadora foi selecionado
+            EbsTransportadora fkT = (EbsTransportadora) ebs_jCbofk_transportadora.getSelectedItem();
+            if (fkT == null) {
+                JOptionPane.showMessageDialog(this, "Nenhuma transportadora selecionada", "Erro", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } // Adiciona a FK da transportadora na Classe
+            f.setEbsTransportadora((EbsTransportadora) fkT);
 
-            //gambiarra para funcionar e nao funcionou
-            EbsTransportadora t = new EbsTransportadora();
-            t.setEbsIdTransportadora(1);
-            t.setEbsNome("1");
-            t.setEbsCnpj("11.111.111/1111-11");
-            t.setEbsEndereco("1");
-            t.setEbsResponsavel("1");
-            t.setEbsEmail("1");
-            t.setEbsTelefone("(11)11111-1111");
-            f.setEbsTransportadora(t);
-            
             // Definir se o fornecedor está ativo e adicionar na classe            
             f.setEbsAtivo(ebs_jChbativo.isSelected() ? "s" : "n");
 
@@ -206,7 +203,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
 
     public void beanview(EbsFornecedor f) {
         ebs_jTxtid_fornecedor.setText(String.valueOf(f.getEbsIdFornecedor()));
-        //ebs_jCbofk_transportadora.setSelectedIndex(f.getEbsTransportadora());
+        ebs_jCbofk_transportadora.setSelectedItem(f.getEbsTransportadora());
         ebs_jChbativo.setSelected("s".equals(f.getEbsAtivo()));
         ebs_jTxtnome_fornecedor.setText(f.getEbsNomeFornecedor());
         ebs_jFmtcelular.setText(f.getEbsCelular());
@@ -221,6 +218,14 @@ public class JDlgFornecedor extends javax.swing.JDialog {
         ebs_jTxtbairro.setText(f.getEbsBairro());
         ebs_jTxtcidade.setText(f.getEbsCidade());
         ebs_jCboestado.setSelectedItem(f.getEbsEstado());
+    }
+
+    private void telaPesquisar() {
+        Class c = EbsFornecedor.class;
+        EbsFornecedor o = new EbsFornecedor();
+        Class ct = JDlgFornecedor.class;
+        JDlgPesquisar jDlgP = new JDlgPesquisar(null, true, c, o, ct, this, "Fornecedor");
+        jDlgP.setVisible(true);
     }
 
     /**
@@ -260,9 +265,9 @@ public class JDlgFornecedor extends javax.swing.JDialog {
         ebs_jTxtnumero = new javax.swing.JTextField();
         ebs_jTxtbairro = new javax.swing.JTextField();
         ebs_jTxtcidade = new javax.swing.JTextField();
-        ebs_jCbofk_transportadora = new javax.swing.JComboBox<>();
+        ebs_jCbofk_transportadora = new javax.swing.JComboBox<EbsTransportadora>();
         ebs_jChbativo = new javax.swing.JCheckBox();
-        ebs_jCboestado = new javax.swing.JComboBox<>();
+        ebs_jCboestado = new javax.swing.JComboBox<String>();
         ebs_jBtnIncluir = new javax.swing.JButton();
         ebs_jBtnAlterar = new javax.swing.JButton();
         ebs_jBtnExcluir = new javax.swing.JButton();
@@ -309,11 +314,9 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             }
         });
 
-        ebs_jCbofk_transportadora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Não definida" }));
-
         ebs_jChbativo.setText("Ativo");
 
-        ebs_jCboestado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO" }));
+        ebs_jCboestado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO" }));
         ebs_jCboestado.setToolTipText("");
         ebs_jCboestado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -562,8 +565,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
     private void ebs_jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnAlterarActionPerformed
         if (pesquisar == false) {
             //INSTACIAR TELA
-            JDlgFornecedorPesquisar jDlgFP = new JDlgFornecedorPesquisar(null, true);
-            jDlgFP.setVisible(true);
+            telaPesquisar();
         }
         habilitar(true);
         Util.habilitar(false, ebs_jTxtid_fornecedor);
@@ -573,8 +575,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
 
     private void ebs_jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnExcluirActionPerformed
         if (pesquisar == false) {
-            JDlgFornecedorPesquisar jDlgFP = new JDlgFornecedorPesquisar(null, true);
-            jDlgFP.setVisible(true);
+            telaPesquisar();
         }
         if (Util.perguntar("Confirme exclusão!", "Deletar registro")) {
             DAOgeneric dao = new DAOgeneric();
@@ -595,6 +596,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
         } else {
             dao.update(viewbean());
         }
+        limparCampos();
         habilitar(false);
     }//GEN-LAST:event_ebs_jBtnConfirmarActionPerformed
 
@@ -605,8 +607,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
     }//GEN-LAST:event_ebs_jBtnCancelarActionPerformed
 
     private void ebs_jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnPesquisarActionPerformed
-        JDlgFornecedorPesquisar jDlgFP = new JDlgFornecedorPesquisar(null, true);
-        jDlgFP.setVisible(true);
+        telaPesquisar();
     }//GEN-LAST:event_ebs_jBtnPesquisarActionPerformed
 
     /**
@@ -674,7 +675,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
     private javax.swing.JButton ebs_jBtnIncluir;
     private javax.swing.JButton ebs_jBtnPesquisar;
     private javax.swing.JComboBox<String> ebs_jCboestado;
-    private javax.swing.JComboBox<String> ebs_jCbofk_transportadora;
+    private javax.swing.JComboBox<EbsTransportadora> ebs_jCbofk_transportadora;
     private javax.swing.JCheckBox ebs_jChbativo;
     private javax.swing.JFormattedTextField ebs_jFmtcelular;
     private javax.swing.JFormattedTextField ebs_jFmtcnpj;

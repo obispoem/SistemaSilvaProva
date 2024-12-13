@@ -4,26 +4,65 @@
  */
 package view;
 
+import controller.ControllerPesquisar;
+import dao.DAOgeneric;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDialog;
 
 /**
  *
  * @author bispo
  */
-public class JDlgCategoriaPesquisar extends javax.swing.JDialog {
+public class JDlgPesquisar extends javax.swing.JDialog {
 
     /**
      * Creates new form JDlgUsuarioPesquisar
      */
-    public JDlgCategoriaPesquisar(java.awt.Frame parent, boolean modal) {
+    ControllerPesquisar controllerPesquisar;
+    String tela = "Usuarios";
+    JDialog telaA;
+    Class clazz;
+    Object objeto;
+    Class clazzTela;
+    Method bv;
+
+    public JDlgPesquisar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setTitle("Pesquisa Categoria");
-        setLocationRelativeTo(null);
     }
 
-    /*public void telaAnterior(JDlgUsuario jDlgUsuario){
-        this.jDlgUsuario = jDlgUsuario;
-    }*/
+    public JDlgPesquisar(java.awt.Frame parent, boolean modal, Class<?> c, Object o, Class ct, JDialog t, String nt) {
+        super(parent, modal);
+        initComponents();
+        setTitle("Pesquisa " + getTela());
+        setLocationRelativeTo(null);
+        setBean(c); //classe bean
+        setObject(o); //objeto
+        setTelaAnterior(t); //tela 
+        setClazzTela(ct); //classe da tela
+        setTela(nt);
+
+        controllerPesquisar = new ControllerPesquisar(getBean());
+
+        DAOgeneric dao = new DAOgeneric();
+        List lista = dao.listAll(getBean());
+
+        controllerPesquisar.setList(lista);
+        ebs_jTblPesquisa.setModel(controllerPesquisar);
+    }
+
+    public final String getTela() {
+        return tela;
+    }
+
+    public final void setTela(String tela) {
+        this.tela = tela;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,6 +130,21 @@ public class JDlgCategoriaPesquisar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOKActionPerformed
+        objeto = controllerPesquisar.getBean(ebs_jTblPesquisa.getSelectedRow());
+
+        Method[] listMethods = getClazzTela().getDeclaredMethods();
+        for (Method method : listMethods) {
+            if (method.getName().equals("beanview")) {
+                bv = method;
+                //System.out.println("bv:  "+bv);
+            }
+        }
+        bv.setAccessible(true);
+        try {
+            bv.invoke(getTelaAnterior(), objeto);
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            Logger.getLogger(JDlgPesquisar.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_jBtnOKActionPerformed
 
@@ -98,8 +152,36 @@ public class JDlgCategoriaPesquisar extends javax.swing.JDialog {
 
     }//GEN-LAST:event_ebs_jTblPesquisaMouseClicked
 
-    public void setTelaAnterios(JDlgUsuario jDlgUsuario) {
- 
+    private void setTelaAnterior(JDialog telaAnterior) {
+        this.telaA = telaAnterior;
+    }
+
+    public JDialog getTelaAnterior() {
+        return this.telaA;
+    }
+
+    public Class getClazzTela() {
+        return this.clazzTela;
+    }
+
+    private void setClazzTela(Class ct) {
+        this.clazzTela = ct;
+    }
+
+    private void setBean(Class clazz) {
+        this.clazz = clazz;
+    }
+
+    private Class getBean() {
+        return this.clazz;
+    }
+
+    private void setObject(Object object) {
+        this.objeto = object;
+    }
+
+    public Object getObject() {
+        return this.objeto;
     }
 
     /**
@@ -119,43 +201,29 @@ public class JDlgCategoriaPesquisar extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JDlgCategoriaPesquisar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgPesquisar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JDlgCategoriaPesquisar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgPesquisar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JDlgCategoriaPesquisar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgPesquisar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JDlgCategoriaPesquisar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgPesquisar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                JDlgCategoriaPesquisar dialog = new JDlgCategoriaPesquisar(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            JDlgPesquisar dialog = new JDlgPesquisar(new javax.swing.JFrame(), true);
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(true);
         });
     }
 

@@ -62,7 +62,7 @@ public class DAOgeneric {
         session.getTransaction().commit();
         return lista;
     }
-    /*
+  /*  
      public static void main(String[] args){
      Session session = HibernateUtil.getSessionFactory().openSession(); // Obtém a sessão do Hibernate
      DAOgeneric dao = new DAOgeneric(); // Instancia o DAO

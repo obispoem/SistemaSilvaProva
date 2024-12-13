@@ -80,6 +80,14 @@ public class JDlgCategoria extends javax.swing.JDialog {
         ebs_jTxtnome.setText(c.getEbsNome());
     }
 
+    private void telaPesquisar() {
+        Class c = EbsCategoria.class;
+        EbsCategoria o = new EbsCategoria();
+        Class ct = JDlgCategoria.class;
+        JDlgPesquisar jDlgP = new JDlgPesquisar(null, true, c, o, ct, this, "Categoria");
+        jDlgP.setVisible(true);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -220,8 +228,7 @@ public class JDlgCategoria extends javax.swing.JDialog {
     private void ebs_jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnAlterarActionPerformed
         if (pesquisar == false) {
             //INSTACIAR TELA
-            JDlgCategoriaPesquisar jDlgCP = new JDlgCategoriaPesquisar(null, true);
-            jDlgCP.setVisible(true);
+            telaPesquisar();
         }
         habilitar(true);
         Util.habilitar(false, ebs_jTxtid_categoria);
@@ -231,8 +238,7 @@ public class JDlgCategoria extends javax.swing.JDialog {
 
     private void ebs_jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnExcluirActionPerformed
         if (pesquisar == false) {
-            JDlgCategoriaPesquisar jDlgCP = new JDlgCategoriaPesquisar(null, true);
-            jDlgCP.setVisible(true);
+            telaPesquisar();
         }
         if (Util.perguntar("Confirme exclusão!", "Deletar registro")) {
             DAOgeneric dao = new DAOgeneric();
@@ -253,6 +259,7 @@ public class JDlgCategoria extends javax.swing.JDialog {
         } else {
             dao.update(viewbean());
         }
+        limparCampos();
         habilitar(false);
     }//GEN-LAST:event_ebs_jBtnConfirmarActionPerformed
 
@@ -263,8 +270,7 @@ public class JDlgCategoria extends javax.swing.JDialog {
     }//GEN-LAST:event_ebs_jBtnCancelarActionPerformed
 
     private void ebs_jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnPesquisarActionPerformed
-        JDlgCategoriaPesquisar jDlgCP = new JDlgCategoriaPesquisar(null, true);
-        jDlgCP.setVisible(true);
+        telaPesquisar();
     }//GEN-LAST:event_ebs_jBtnPesquisarActionPerformed
 
     /**
