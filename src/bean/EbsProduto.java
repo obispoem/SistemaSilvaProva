@@ -109,4 +109,20 @@ public class EbsProduto implements java.io.Serializable {
         this.ebsEstoque = ebsEstoque;
     }
 
+    @Override
+    public String toString() {
+        return this.getEbsNome();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof EbsProduto) {
+            EbsProduto p = (EbsProduto) obj;
+            if (p.getEbsIdProduto() == this.getEbsIdProduto()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

@@ -52,7 +52,7 @@ public class JDlgCategoria extends javax.swing.JDialog {
             // Verificar se o campo ID da categoria está vazio
             String idText = ebs_jTxtid_categoria.getText();
             if (idText.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O ID da categoria não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O ID da categoria não pode estar vazio", "ERRO");
                 return null;
             }
             // Adiciona o id da categoria na Classe
@@ -61,14 +61,14 @@ public class JDlgCategoria extends javax.swing.JDialog {
             // Verificar se o nome da categoria está vazio
             String nome = ebs_jTxtnome.getText();
             if (nome.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O nome da categoria não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O nome da categoria não pode estar vazio", "ERRO");
                 return null;
             }
             // Adiciona o nome da categoria na Classe
             c.setEbsNome(nome);
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao converter valores", "Erro", JOptionPane.ERROR_MESSAGE);
+            Util.mostrar("Erro ao converter valores", "ERRO");
             Logger.getLogger(JDlgCategoria.class.getName()).log(Level.SEVERE, "Erro ao preencher categoria", ex);
             return null;
         }
@@ -111,10 +111,17 @@ public class JDlgCategoria extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setFont(new java.awt.Font("Dubai", 0, 12)); // NOI18N
 
+        ebs_jLblId_categoria.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblId_categoria.setText("ID");
 
+        ebs_jLblnome.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblnome.setText("Nome");
 
+        ebs_jTxtid_categoria.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtnome.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jBtnIncluir.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add1.png"))); // NOI18N
         ebs_jBtnIncluir.setText("Incluir");
         ebs_jBtnIncluir.addActionListener(new java.awt.event.ActionListener() {
@@ -123,6 +130,7 @@ public class JDlgCategoria extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnAlterar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
         ebs_jBtnAlterar.setText("Alterar");
         ebs_jBtnAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +139,7 @@ public class JDlgCategoria extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnExcluir.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/deletar.png"))); // NOI18N
         ebs_jBtnExcluir.setText("Excluir");
         ebs_jBtnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -139,6 +148,7 @@ public class JDlgCategoria extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnConfirmar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmar1.png"))); // NOI18N
         ebs_jBtnConfirmar.setText("Confirmar");
         ebs_jBtnConfirmar.addActionListener(new java.awt.event.ActionListener() {
@@ -147,6 +157,7 @@ public class JDlgCategoria extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnCancelar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar2.png"))); // NOI18N
         ebs_jBtnCancelar.setText("Cancelar");
         ebs_jBtnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -155,6 +166,7 @@ public class JDlgCategoria extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnPesquisar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pesquisa1.png"))); // NOI18N
         ebs_jBtnPesquisar.setText("Pesquisar");
         ebs_jBtnPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -190,7 +202,7 @@ public class JDlgCategoria extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ebs_jLblnome)
                             .addComponent(ebs_jTxtnome))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,7 +225,7 @@ public class JDlgCategoria extends javax.swing.JDialog {
                     .addComponent(ebs_jBtnExcluir)
                     .addComponent(ebs_jBtnCancelar)
                     .addComponent(ebs_jBtnPesquisar))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

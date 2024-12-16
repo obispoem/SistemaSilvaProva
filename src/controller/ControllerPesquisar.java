@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-
 /**
  *
  * @author bispo

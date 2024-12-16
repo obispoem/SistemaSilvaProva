@@ -60,7 +60,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
             // Verificar se o campo ID do usuário está vazio
             String idText = ebs_jTxtid_usuario.getText();
             if (idText.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O ID do usuário não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O ID do usuário não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o id do usuario na Classe
             u.setEbsIdUsuario(Util.strToInt(idText));
@@ -68,7 +68,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
             // Verificar se o nome do usuário está vazio
             String nome = ebs_jTxtnome.getText();
             if (nome.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O nome do usuário não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O nome do usuário não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o nome do usuario na Classe
             u.setEbsNome(nome);
@@ -76,7 +76,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
             // Verificar se o apelido do usuário está vazio
             String apelido = ebs_jTxtapelido.getText();
             if (apelido.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O apelido do usuário não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O apelido do usuário não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o apelido do usuario na Classe
             u.setEbsApelido(apelido);
@@ -84,7 +84,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
             // Verificar se o CPF está vazio
             String cpf = ebs_jFmtcpf.getText();
             if (cpf.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O CPF não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O CPF não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o cpf do usuario na Classe
             u.setEbsCpf(cpf);
@@ -92,7 +92,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
             // Verificar se a data de nascimento está vazia
             String dataNascText = ebs_jFmtdata_nasc.getText();
             if (dataNascText.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "A data de nascimento não pode estar vazia", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("A data de nascimento não pode estar vazia", "ERRO");
                 return null;
             } // Adiciona a data de nascimento do usuario na Classe
             u.setEbsDataNasc(Util.strToDate(dataNascText));
@@ -100,7 +100,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
             // Verificar se a senha está vazia
             String senha = new String(ebs_jPwfsenha.getPassword());
             if (senha.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "A senha não pode estar vazia", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("A senha não pode estar vazia", "ERRO");
                 return null;
             } // Adiciona a senha do usuario na Classe
             u.setEbsSenha(senha);
@@ -108,7 +108,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
             // Verificar se o nível foi selecionado
             int nivelSelecionado = ebs_jCbonivel.getSelectedIndex();
             if (nivelSelecionado == NIVEL_NAO_DEFINIDO) {
-                JOptionPane.showMessageDialog(this, "Não selecionado nível", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("Não selecionado nível", "ERRO");
                 return null;
             } // Adiciona o nivel do usuario na Classe
             u.setEbsNivel(nivelSelecionado);
@@ -117,7 +117,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
             u.setEbsAtivo(ebs_jChbativo.isSelected() ? "s" : "n");
 
         } catch (NumberFormatException | ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao converter valores", "Erro", JOptionPane.ERROR_MESSAGE);
+            Util.mostrar("Erro ao converter valores", "ERRO");
             Logger.getLogger(JDlgUsuario.class.getName()).log(Level.SEVERE, "Erro ao preencher usuário", ex);
             return null;
         }
@@ -166,7 +166,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
         ebs_jFmtcpf = new javax.swing.JFormattedTextField();
         ebs_jFmtdata_nasc = new javax.swing.JFormattedTextField();
         ebs_jPwfsenha = new javax.swing.JPasswordField();
-        ebs_jCbonivel = new javax.swing.JComboBox<>();
+        ebs_jCbonivel = new javax.swing.JComboBox<String>();
         ebs_jChbativo = new javax.swing.JCheckBox();
         ebs_jBtnCancelar = new javax.swing.JButton();
         ebs_jBtnPesquisar = new javax.swing.JButton();
@@ -177,38 +177,58 @@ public class JDlgUsuario extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        ebs_jLblid_usuario.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblid_usuario.setText("ID");
 
+        ebs_jLblnome.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblnome.setText("Nome");
 
+        ebs_jLblapelido.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblapelido.setText("Apelido");
 
+        ebs_JLblcpf.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_JLblcpf.setText("CPF");
 
+        ebs_JLbldata_nasc.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_JLbldata_nasc.setText("Data de Nascimento");
 
+        ebs_JLblsenha.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_JLblsenha.setText("Senha");
 
+        ebs_JLblnivel.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_JLblnivel.setText("Nível");
 
+        ebs_jTxtid_usuario.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jTxtid_usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ebs_jTxtid_usuarioActionPerformed(evt);
             }
         });
 
+        ebs_jTxtnome.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtapelido.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jFmtcpf.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jFmtdata_nasc.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jFmtdata_nasc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ebs_jFmtdata_nascActionPerformed(evt);
             }
         });
 
-        ebs_jCbonivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "não definido", "Administrador", "Funcionario", "Usuario" }));
+        ebs_jPwfsenha.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
 
+        ebs_jCbonivel.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        ebs_jCbonivel.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "não definido", "Administrador", "Funcionario", "Usuario" }));
+
+        ebs_jChbativo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jChbativo.setText("Ativo");
         ebs_jChbativo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ebs_jChbativo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
+        ebs_jBtnCancelar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar2.png"))); // NOI18N
         ebs_jBtnCancelar.setText("Cancelar");
         ebs_jBtnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -217,6 +237,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnPesquisar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pesquisa1.png"))); // NOI18N
         ebs_jBtnPesquisar.setText("Pesquisar");
         ebs_jBtnPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -225,6 +246,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnIncluir.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add1.png"))); // NOI18N
         ebs_jBtnIncluir.setText("Incluir");
         ebs_jBtnIncluir.addActionListener(new java.awt.event.ActionListener() {
@@ -233,6 +255,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnAlterar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
         ebs_jBtnAlterar.setText("Alterar");
         ebs_jBtnAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -241,6 +264,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnExcluir.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/deletar.png"))); // NOI18N
         ebs_jBtnExcluir.setText("Excluir");
         ebs_jBtnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -249,6 +273,7 @@ public class JDlgUsuario extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnConfirmar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmar1.png"))); // NOI18N
         ebs_jBtnConfirmar.setText("Confirmar");
         ebs_jBtnConfirmar.addActionListener(new java.awt.event.ActionListener() {
@@ -402,10 +427,10 @@ public class JDlgUsuario extends javax.swing.JDialog {
         if (Util.perguntar("Confirme exclusão!", "Deletar registro")) {
             DAOgeneric dao = new DAOgeneric();
             dao.delete(viewbean());
-            JOptionPane.showMessageDialog(null, "Exclusão realizada");
+            Util.mostrar("Exclusão realizada", "Aviso");
             limparCampos();
         } else {
-            JOptionPane.showMessageDialog(null, "Exclusão cancelada");
+            Util.mostrar("Exclusão cancelada", "Aviso");
             habilitar(false);
         }
         pesquisar = false;

@@ -69,8 +69,8 @@ public class Util {
         return dateFormat.format(data);
     }
 
-    public static void mostrar(String mensagem) {
-        JOptionPane.showMessageDialog(null, mensagem);
+    public static void mostrar(String mensagem, String titulo) {
+        JOptionPane.showMessageDialog(null ,mensagem, titulo, 1);
     }
 
     public static boolean perguntar(String mensagem, String titulo) {
@@ -78,7 +78,7 @@ public class Util {
         return resp == JOptionPane.YES_OPTION;
     }
 
-    public static void maskCPF(JFormattedTextField campo){
+    public static void maskCPF(JFormattedTextField campo) {
         MaskFormatter mask = null;
         try {
             mask = new MaskFormatter("###.###.###-##");

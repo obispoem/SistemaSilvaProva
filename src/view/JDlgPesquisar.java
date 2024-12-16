@@ -38,13 +38,13 @@ public class JDlgPesquisar extends javax.swing.JDialog {
     public JDlgPesquisar(java.awt.Frame parent, boolean modal, Class<?> c, Object o, Class ct, JDialog t, String nt) {
         super(parent, modal);
         initComponents();
-        setTitle("Pesquisa " + getTela());
         setLocationRelativeTo(null);
         setBean(c); //classe bean
         setObject(o); //objeto
         setTelaAnterior(t); //tela 
         setClazzTela(ct); //classe da tela
         setTela(nt);
+        setTitle("Pesquisa " + getTela());
 
         controllerPesquisar = new ControllerPesquisar(getBean());
 
@@ -78,6 +78,8 @@ public class JDlgPesquisar extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        ebs_jTblPesquisa.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        ebs_jTblPesquisa.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         ebs_jTblPesquisa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

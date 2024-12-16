@@ -73,7 +73,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             // Verificar se o campo ID do fornecedor está vazio
             String idText = ebs_jTxtid_fornecedor.getText();
             if (idText.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O ID do fornecedor não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O ID do fornecedor não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o ID do fornecedor na Classe
             f.setEbsIdFornecedor(Util.strToInt(idText));
@@ -81,7 +81,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             // Verificar se o campo transportadora foi selecionado
             EbsTransportadora fkT = (EbsTransportadora) ebs_jCbofk_transportadora.getSelectedItem();
             if (fkT == null) {
-                JOptionPane.showMessageDialog(this, "Nenhuma transportadora selecionada", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("Nenhuma transportadora selecionada", "ERRO");
                 return null;
             } // Adiciona a FK da transportadora na Classe
             f.setEbsTransportadora((EbsTransportadora) fkT);
@@ -92,7 +92,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             // Verificar se o nome do fornecedor está vazio
             String nomeFornecedor = ebs_jTxtnome_fornecedor.getText();
             if (nomeFornecedor.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O nome do fornecedor não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O nome do fornecedor não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o nome do fornecedor na Classe
             f.setEbsNomeFornecedor(nomeFornecedor);
@@ -100,7 +100,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             // Verificar se o celular está vazio
             String celular = ebs_jFmtcelular.getText();
             if (celular.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O celular não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O celular não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o celular do fornecedor na Classe
             f.setEbsCelular(celular);
@@ -108,7 +108,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             // Verificar se o nome da empresa está vazio
             String nomeEmpresa = ebs_jTxtnome_empresa.getText();
             if (nomeEmpresa.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O nome da empresa não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O nome da empresa não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o nome da empresa na Classe
             f.setEbsNomeEmpresa(nomeEmpresa);
@@ -116,7 +116,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             // Verificar se o telefone está vazio
             String telefone = ebs_jFmttelefone.getText();
             if (telefone.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O telefone não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O telefone não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o telefone do fornecedor na Classe
             f.setEbsTelefone(telefone);
@@ -124,7 +124,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             // Verificar se o nome fantasia está vazio
             String nomeFantasia = ebs_jTxtnome_fant.getText();
             if (nomeFantasia.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O nome fantasia não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O nome fantasia não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o nome fantasia na Classe
             f.setEbsNomeFant(nomeFantasia);
@@ -132,7 +132,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             // Verificar se o CNPJ está vazio
             String cnpj = ebs_jFmtcnpj.getText();
             if (cnpj.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O CNPJ não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O CNPJ não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o CNPJ do fornecedor na Classe
             f.setEbsCnpj(cnpj);
@@ -140,7 +140,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             // Verificar se o site da empresa está vazio
             String siteEmpresa = ebs_jTxtsite_empresa.getText();
             if (siteEmpresa.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O site da empresa não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O site da empresa não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o site da empresa na Classe
             f.setEbsSiteEmpresa(siteEmpresa);
@@ -148,7 +148,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             // Verificar se o email está vazio
             String email = ebs_jTxtemail.getText();
             if (email.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O email não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O email não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o email do fornecedor na Classe
             f.setEbsEmail(email);
@@ -156,7 +156,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             // Verificar se o endereço está vazio
             String endereco = ebs_jTxtendereco.getText();
             if (endereco.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O endereço não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O endereço não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o endereço na Classe
             f.setEbsEndereco(endereco);
@@ -164,7 +164,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             // Verificar se o número está vazio
             String numero = ebs_jTxtnumero.getText();
             if (numero.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O número não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O número não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o número na Classe
             f.setEbsNumero(numero);
@@ -172,7 +172,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             // Verificar se o bairro está vazio
             String bairro = ebs_jTxtbairro.getText();
             if (bairro.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O bairro não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O bairro não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o bairro na Classe
             f.setEbsBairro(bairro);
@@ -180,21 +180,21 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             // Verificar se a cidade está vazia
             String cidade = ebs_jTxtcidade.getText();
             if (cidade.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "A cidade não pode estar vazia", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("A cidade não pode estar vazia", "ERRO");
                 return null;
             } // Adiciona a cidade na Classe
             f.setEbsCidade(cidade);
 
             // Verificar se o estado foi selecionado
             int estadoSelecionado = ebs_jCboestado.getSelectedIndex();
-            if (estadoSelecionado == 0) {
-                JOptionPane.showMessageDialog(this, "Nenhum estado selecionado", "Erro", JOptionPane.ERROR_MESSAGE);
+            if (estadoSelecionado == -1) {
+                Util.mostrar("Nenhum estado selecionado", "ERRO");
                 return null;
             } // Adiciona o estado na Classe
             f.setEbsEstado(ebs_jCboestado.getSelectedItem().toString());
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao converter valores", "Erro", JOptionPane.ERROR_MESSAGE);
+            Util.mostrar("Erro ao converter valores", "ERRO");
             Logger.getLogger(JDlgFornecedor.class.getName()).log(Level.SEVERE, "Erro ao preencher fornecedor", ex);
             return null;
         }
@@ -278,44 +278,88 @@ public class JDlgFornecedor extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setFont(new java.awt.Font("Dubai", 0, 12)); // NOI18N
 
+        ebs_jLblid_fornecedor.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblid_fornecedor.setText("ID");
 
+        ebs_jLbltransportadora.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLbltransportadora.setText("Transportadora");
 
+        ebs_jLblnome_fornecedor.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblnome_fornecedor.setText("Nome Fornecedor");
 
+        ebs_jLblcelular.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblcelular.setText("Celular");
 
+        ebs_jLblnome_empresa.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblnome_empresa.setText("Nome Empresa");
 
+        ebs_jLbltelefone.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLbltelefone.setText("Telefone");
 
+        ebs_jLblnome_fant.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblnome_fant.setText("Nome Fantoche");
 
+        ebs_jLblcnpj.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblcnpj.setText("CNPJ");
 
+        ebs_jLblsite_empresa.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblsite_empresa.setText("Site");
 
+        ebs_jLblemail.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblemail.setText("Email");
 
+        ebs_jLblendereco.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblendereco.setText("Endereço");
 
+        ebs_jLblnumero.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblnumero.setText("Número");
 
+        ebs_jLblbairro.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblbairro.setText("Bairro");
 
+        ebs_jLblcidade.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblcidade.setText("Cidade");
 
+        ebs_jLblestado.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblestado.setText("Estado");
 
+        ebs_jTxtid_fornecedor.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtnome_fornecedor.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jFmtcelular.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtnome_empresa.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jTxtnome_empresa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ebs_jTxtnome_empresaActionPerformed(evt);
             }
         });
 
+        ebs_jFmttelefone.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtnome_fant.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jFmtcnpj.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtsite_empresa.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtemail.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtendereco.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtnumero.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtbairro.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtcidade.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jCbofk_transportadora.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jChbativo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jChbativo.setText("Ativo");
 
+        ebs_jCboestado.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jCboestado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO" }));
         ebs_jCboestado.setToolTipText("");
         ebs_jCboestado.addActionListener(new java.awt.event.ActionListener() {
@@ -324,6 +368,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnIncluir.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add1.png"))); // NOI18N
         ebs_jBtnIncluir.setText("Incluir");
         ebs_jBtnIncluir.addActionListener(new java.awt.event.ActionListener() {
@@ -332,6 +377,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnAlterar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
         ebs_jBtnAlterar.setText("Alterar");
         ebs_jBtnAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -340,6 +386,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnExcluir.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/deletar.png"))); // NOI18N
         ebs_jBtnExcluir.setText("Excluir");
         ebs_jBtnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -348,6 +395,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnConfirmar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmar1.png"))); // NOI18N
         ebs_jBtnConfirmar.setText("Confirmar");
         ebs_jBtnConfirmar.addActionListener(new java.awt.event.ActionListener() {
@@ -356,6 +404,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnCancelar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar2.png"))); // NOI18N
         ebs_jBtnCancelar.setText("Cancelar");
         ebs_jBtnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -364,6 +413,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnPesquisar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pesquisa1.png"))); // NOI18N
         ebs_jBtnPesquisar.setText("Pesquisar");
         ebs_jBtnPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -543,7 +593,7 @@ public class JDlgFornecedor extends javax.swing.JDialog {
                     .addComponent(ebs_jBtnExcluir)
                     .addComponent(ebs_jBtnCancelar)
                     .addComponent(ebs_jBtnPesquisar))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -580,10 +630,10 @@ public class JDlgFornecedor extends javax.swing.JDialog {
         if (Util.perguntar("Confirme exclusão!", "Deletar registro")) {
             DAOgeneric dao = new DAOgeneric();
             dao.delete(viewbean());
-            JOptionPane.showMessageDialog(null, "Exclusão realizada");
+            Util.mostrar("Exclusão realizada", "Aviso");
             limparCampos();
         } else {
-            JOptionPane.showMessageDialog(null, "Exclusão cancelada");
+            Util.mostrar("Exclusão cancelada", "Aviso");
             habilitar(false);
         }
         pesquisar = false;

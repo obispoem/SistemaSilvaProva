@@ -46,6 +46,7 @@ public class JFrmLogin extends javax.swing.JFrame {
         jLabel1.setText("Usuario");
 
         jTxtUsuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTxtUsuario.setText("adm");
 
         jLabel2.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
         jLabel2.setText("Login");
@@ -54,6 +55,7 @@ public class JFrmLogin extends javax.swing.JFrame {
         jLabel3.setText("Senha");
 
         jPwfsenha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jPwfsenha.setText("123");
 
         jBtnLogar.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jBtnLogar.setText("Logar");

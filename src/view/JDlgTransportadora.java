@@ -55,7 +55,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
             // Verificar se o campo ID da transportadora está vazio
             String idText = ebs_jTxtid_transportadora.getText();
             if (idText.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O ID da transportadora não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O ID da transportadora não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o ID da transportadora na Classe
             t.setEbsIdTransportadora(Util.strToInt(idText));
@@ -63,7 +63,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
             // Verificar se o nome da transportadora está vazio
             String nome = ebs_jTxtnome.getText();
             if (nome.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O nome da transportadora não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O nome da transportadora não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o nome da transportadora na Classe
             t.setEbsNome(nome);
@@ -71,7 +71,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
             // Verificar se o CNPJ está vazio
             String cnpj = ebs_jFmtcnpj.getText();
             if (cnpj.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O CNPJ não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O CNPJ não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o CNPJ da transportadora na Classe
             t.setEbsCnpj(cnpj);
@@ -79,7 +79,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
             // Verificar se o responsável está vazio
             String responsavel = ebs_jTxtresponsavel.getText();
             if (responsavel.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O responsável não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O responsável não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o responsável da transportadora na Classe
             t.setEbsResponsavel(responsavel);
@@ -87,7 +87,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
             // Verificar se o email está vazio
             String email = ebs_jTxtemail.getText();
             if (email.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O email não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O email não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o email da transportadora na Classe
             t.setEbsEmail(email);
@@ -95,7 +95,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
             // Verificar se o telefone está vazio
             String telefone = ebs_jFmttelefone.getText();
             if (telefone.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O telefone não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O telefone não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o telefone da transportadora na Classe
             t.setEbsTelefone(telefone);
@@ -103,13 +103,13 @@ public class JDlgTransportadora extends javax.swing.JDialog {
             // Verificar se o endereço está vazio
             String endereco = ebs_jTxtendereco.getText();
             if (endereco.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O endereço não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O endereço não pode estar vazio", "ERRO");
                 return null;
             } // Adiciona o endereço da transportadora na Classe
             t.setEbsEndereco(endereco);
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao converter valores", "Erro", JOptionPane.ERROR_MESSAGE);
+            Util.mostrar("Erro ao converter valores", "ERRO");
             Logger.getLogger(JDlgTransportadora.class.getName()).log(Level.SEVERE, "Erro ao preencher transportadora", ex);
             return null;
         }
@@ -166,26 +166,47 @@ public class JDlgTransportadora extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        ebs_jLblid_transportadora.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblid_transportadora.setText("ID");
 
+        ebs_JLblcnpj.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_JLblcnpj.setText("CNPJ");
 
+        ebs_jLblnome.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblnome.setText("Nome ");
 
+        ebs_jLblresponsavel.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblresponsavel.setText("Responsável");
 
+        ebs_jLblemail.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblemail.setText("Email");
 
+        ebs_jLbltelefone.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLbltelefone.setText("Telefone");
 
+        ebs_jLblendereco.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblendereco.setText("Endereco");
 
+        ebs_jTxtid_transportadora.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jTxtid_transportadora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ebs_jTxtid_transportadoraActionPerformed(evt);
             }
         });
 
+        ebs_jFmtcnpj.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtnome.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtresponsavel.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtemail.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jFmttelefone.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtendereco.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jBtnIncluir.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add1.png"))); // NOI18N
         ebs_jBtnIncluir.setText("Incluir");
         ebs_jBtnIncluir.addActionListener(new java.awt.event.ActionListener() {
@@ -194,6 +215,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnAlterar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
         ebs_jBtnAlterar.setText("Alterar");
         ebs_jBtnAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -202,6 +224,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnExcluir.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/deletar.png"))); // NOI18N
         ebs_jBtnExcluir.setText("Excluir");
         ebs_jBtnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -210,6 +233,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnConfirmar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmar1.png"))); // NOI18N
         ebs_jBtnConfirmar.setText("Confirmar");
         ebs_jBtnConfirmar.addActionListener(new java.awt.event.ActionListener() {
@@ -218,6 +242,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnCancelar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar2.png"))); // NOI18N
         ebs_jBtnCancelar.setText("Cancelar");
         ebs_jBtnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -226,6 +251,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnPesquisar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pesquisa1.png"))); // NOI18N
         ebs_jBtnPesquisar.setText("Pesquisar");
         ebs_jBtnPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -262,7 +288,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(ebs_jTxtid_transportadora, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(ebs_jLblid_transportadora))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 402, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(ebs_JLblcnpj)
                                     .addComponent(ebs_jFmtcnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -282,7 +308,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
                                     .addComponent(ebs_jLblresponsavel)
                                     .addComponent(ebs_jLblnome)
                                     .addComponent(ebs_jLblendereco))
-                                .addGap(0, 602, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
@@ -317,7 +343,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
                 .addComponent(ebs_jLblendereco)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ebs_jTxtendereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ebs_jBtnIncluir)
                     .addComponent(ebs_jBtnConfirmar)
@@ -325,7 +351,7 @@ public class JDlgTransportadora extends javax.swing.JDialog {
                     .addComponent(ebs_jBtnExcluir)
                     .addComponent(ebs_jBtnCancelar)
                     .addComponent(ebs_jBtnPesquisar))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -359,10 +385,10 @@ public class JDlgTransportadora extends javax.swing.JDialog {
         if (Util.perguntar("Confirme exclusão!", "Deletar registro")) {
             DAOgeneric dao = new DAOgeneric();
             dao.delete(viewbean());
-            JOptionPane.showMessageDialog(null, "Exclusão realizada");
+            Util.mostrar("Exclusão realizada", "Aviso");
             limparCampos();
         } else {
-            JOptionPane.showMessageDialog(null, "Exclusão cancelada");
+            Util.mostrar("Exclusão cancelada", "Aviso");
             habilitar(false);
         }
         pesquisar = false;

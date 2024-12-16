@@ -66,7 +66,7 @@ public class JDlgProduto extends javax.swing.JDialog {
             // Verificar se o campo ID do produto está vazio
             String idText = ebs_jTxtid_produto.getText();
             if (idText.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O ID do produto não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O ID do produto não pode estar vazio", "ERRO");
                 return null;
             }
             // Adiciona o id do produto na Classe
@@ -75,7 +75,7 @@ public class JDlgProduto extends javax.swing.JDialog {
             // Verificar se o nome do produto está vazio
             String nome = ebs_jTxtnome.getText();
             if (nome.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O nome do produto não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O nome do produto não pode estar vazio", "ERRO");
                 return null;
             }
             // Adiciona o nome do produto na Classe
@@ -84,7 +84,7 @@ public class JDlgProduto extends javax.swing.JDialog {
             // Verificar se a categoria foi selecionada
             EbsCategoria c = (EbsCategoria) ebs_jCbofk_categoria.getSelectedItem();
             if (c == null) {
-                JOptionPane.showMessageDialog(this, "Nenhuma categoria selecionada", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("Nenhuma categoria selecionada", "ERRO");
                 return null;
             }// Adiciona a categoria do  produto na Classe
             p.setEbsCategoria(c);
@@ -92,7 +92,7 @@ public class JDlgProduto extends javax.swing.JDialog {
             // Verificar se a data de chegada está vazia
             String dataChegadaText = ebs_jFmtdata_chegada.getText();
             if (dataChegadaText.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "A data de chegada não pode estar vazia", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("A data de chegada não pode estar vazia", "ERRO");
                 return null;
             }
             // Cria o formato de data e converte a data de chegada para a classe
@@ -101,7 +101,7 @@ public class JDlgProduto extends javax.swing.JDialog {
             // Verificar se a data de validade está vazia
             String dataValidadeText = ebs_jFmtdata_validade.getText();
             if (dataValidadeText.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "A data de validade não pode estar vazia", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("A data de validade não pode estar vazia", "ERRO");
                 return null;
             }
             // Converte a data de validade para a classe
@@ -110,7 +110,7 @@ public class JDlgProduto extends javax.swing.JDialog {
             // Verificar se o valor está vazio
             String valorText = ebs_jTxtvalor.getText();
             if (valorText.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O valor do produto não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O valor do produto não pode estar vazio", "ERRO");
                 return null;
             }
             // Adiciona o valor do produto na Classe
@@ -119,14 +119,14 @@ public class JDlgProduto extends javax.swing.JDialog {
             // Verificar se o estoque está vazio
             String estoqueText = ebs_jTxtestoque.getText();
             if (estoqueText.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "O estoque do produto não pode estar vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                Util.mostrar("O estoque do produto não pode estar vazio", "ERRO");
                 return null;
             }
             // Adiciona o estoque do produto na Classe
             p.setEbsEstoque(Integer.parseInt(estoqueText));
 
         } catch (NumberFormatException | ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao converter valores", "Erro", JOptionPane.ERROR_MESSAGE);
+            Util.mostrar("Erro ao converter valores", "ERRO");
             Logger.getLogger(JDlgUsuario.class.getName()).log(Level.SEVERE, "Erro ao preencher usuário", ex);
             return null;
         }
@@ -185,20 +185,42 @@ public class JDlgProduto extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setFont(new java.awt.Font("Dubai", 0, 12)); // NOI18N
 
+        ebs_jLblCodigo.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblCodigo.setText("ID");
 
+        ebs_JLblCategoria.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_JLblCategoria.setText("Categoria");
 
+        ebs_jLblNome.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblNome.setText("Nome");
 
+        ebs_JLblDataChegada.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_JLblDataChegada.setText("Data de Chegada");
 
+        ebs_JLblDataValidade.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_JLblDataValidade.setText("Data de Validade");
 
+        ebs_jLblValor.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblValor.setText("Valor");
 
+        ebs_jLblEstoque.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jLblEstoque.setText("Estoque");
 
+        ebs_jTxtid_produto.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtnome.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jFmtdata_chegada.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jFmtdata_validade.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtvalor.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jTxtestoque.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jCbofk_categoria.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+
+        ebs_jBtnIncluir.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add1.png"))); // NOI18N
         ebs_jBtnIncluir.setText("Incluir");
         ebs_jBtnIncluir.addActionListener(new java.awt.event.ActionListener() {
@@ -207,6 +229,7 @@ public class JDlgProduto extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnAlterar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
         ebs_jBtnAlterar.setText("Alterar");
         ebs_jBtnAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -215,6 +238,7 @@ public class JDlgProduto extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnExcluir.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/deletar.png"))); // NOI18N
         ebs_jBtnExcluir.setText("Excluir");
         ebs_jBtnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -223,6 +247,7 @@ public class JDlgProduto extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnConfirmar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirmar1.png"))); // NOI18N
         ebs_jBtnConfirmar.setText("Confirmar");
         ebs_jBtnConfirmar.addActionListener(new java.awt.event.ActionListener() {
@@ -231,6 +256,7 @@ public class JDlgProduto extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnCancelar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar2.png"))); // NOI18N
         ebs_jBtnCancelar.setText("Cancelar");
         ebs_jBtnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -239,6 +265,7 @@ public class JDlgProduto extends javax.swing.JDialog {
             }
         });
 
+        ebs_jBtnPesquisar.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         ebs_jBtnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pesquisa1.png"))); // NOI18N
         ebs_jBtnPesquisar.setText("Pesquisar");
         ebs_jBtnPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -261,17 +288,15 @@ public class JDlgProduto extends javax.swing.JDialog {
                                     .addComponent(ebs_JLblDataChegada)
                                     .addComponent(ebs_jFmtdata_chegada, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ebs_JLblDataValidade)
-                                .addGap(136, 136, 136))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ebs_JLblDataValidade)
+                                    .addComponent(ebs_jFmtdata_validade, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(66, 66, 66))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(ebs_jLblNome)
                                     .addComponent(ebs_jTxtnome, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(ebs_jFmtdata_validade, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(44, 44, 44)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -346,7 +371,7 @@ public class JDlgProduto extends javax.swing.JDialog {
                     .addComponent(ebs_jBtnExcluir)
                     .addComponent(ebs_jBtnCancelar)
                     .addComponent(ebs_jBtnPesquisar))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -376,10 +401,10 @@ public class JDlgProduto extends javax.swing.JDialog {
         if (Util.perguntar("Confirme exclusão!", "Deletar registro")) {
             DAOgeneric dao = new DAOgeneric();
             dao.delete(viewbean());
-            JOptionPane.showMessageDialog(null, "Exclusão realizada");
+            Util.mostrar("Exclusão realizada", "Aviso");
             limparCampos();
         } else {
-            JOptionPane.showMessageDialog(null, "Exclusão cancelada");
+            Util.mostrar("Exclusão cancelada", "Aviso");
             habilitar(false);
         }
         pesquisar = false;
