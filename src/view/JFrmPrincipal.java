@@ -4,7 +4,7 @@ public class JFrmPrincipal extends javax.swing.JFrame {
 
     public JFrmPrincipal() {
         initComponents();
-        setTitle("Sistema Vinho");
+        setTitle("Sistema de Compras");
         setExtendedState(MAXIMIZED_BOTH);
         jChbMnuBancoLocal.setSelected(false);
         jChbMnuBancoIF.setSelected(false);
