@@ -26,17 +26,6 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLblCompra" min="-2" max="-2" attributes="0"/>
-                          <Component id="ebs_jCboCompra" min="-2" pref="69" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLblProduto" min="-2" max="-2" attributes="0"/>
-                          <Component id="ebs_jCboProduto" min="-2" pref="257" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
                   <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="ebs_jBtnOk" min="-2" max="-2" attributes="0"/>
@@ -60,8 +49,19 @@
                           </Group>
                       </Group>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLblCompra" min="-2" max="-2" attributes="0"/>
+                          <Component id="ebs_jTxtIdCompra" min="-2" pref="60" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLblProduto" min="-2" max="-2" attributes="0"/>
+                          <Component id="ebs_jCboProduto" min="-2" pref="247" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -75,8 +75,8 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="ebs_jCboCompra" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ebs_jCboProduto" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ebs_jTxtIdCompra" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
@@ -125,6 +125,9 @@
           <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ebs_jCboProdutoActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;EbsProduto&gt;"/>
       </AuxValues>
@@ -143,6 +146,9 @@
           <Font name="Comic Sans MS" size="14" style="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ebs_jTxtQuantidadeKeyReleased"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLblValorUnitario">
       <Properties>
@@ -204,18 +210,15 @@
         <Property name="text" type="java.lang.String" value="Compra"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="ebs_jCboCompra">
+    <Component class="javax.swing.JTextField" name="ebs_jTxtIdCompra">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Comic Sans MS" size="14" style="0"/>
         </Property>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
-        </Property>
       </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;EbsCompra&gt;"/>
-      </AuxValues>
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ebs_jTxtIdCompraKeyReleased"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

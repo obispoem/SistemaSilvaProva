@@ -55,6 +55,7 @@ public class EbsCompraProdutoId  implements java.io.Serializable {
  && (this.getEbsFkCompra()==castOther.getEbsFkCompra());
    }
    
+     @Override
    public int hashCode() {
          int result = 17;
          
@@ -62,7 +63,12 @@ public class EbsCompraProdutoId  implements java.io.Serializable {
          result = 37 * result + this.getEbsFkCompra();
          return result;
    }   
-
+   
+     @Override
+    public String toString() {
+        String id = this.getEbsFkCompra()+", "+this.getEbsFkProduto();
+        return id;
+    }
 
 }
 

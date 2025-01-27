@@ -4,10 +4,12 @@
  */
 package view;
 
-import bean.EbsCompra;
+import bean.EbsCompraProduto;
+import bean.EbsCompraProdutoId;
 import bean.EbsProduto;
 import dao.DAOgeneric;
 import java.util.List;
+import tools.Util;
 
 /**
  *
@@ -16,13 +18,30 @@ import java.util.List;
 public class JDlgCompraProduto extends javax.swing.JDialog {
 
     /**
-     * Creates new form JDlgPedidosProdutos
+     * Creates new form JDlgEbsCompraProduto
      */
+    int compraID;
+    JDlgCompra jDlgCompra;
+
     public JDlgCompraProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setTitle("Compra Produto");
         setLocationRelativeTo(null);
+
+    }
+    
+    public JDlgCompraProduto(java.awt.Frame parent, boolean modal, JDlgCompra telaAnterior, int compraIDa) {
+        super(parent, modal);
+        initComponents();
+        setTitle("Compra Produto");
+        setLocationRelativeTo(null);
+        
+        this.jDlgCompra = telaAnterior;
+        this.compraID = compraIDa;
+        ebs_jTxtIdCompra.setText(Util.intToStr(compraID));
+        
+        Util.habilitar(false, ebs_jTxtValorUnitario, ebs_jTxtTotal, ebs_jTxtIdCompra);
         
         dao.DAOgeneric dao = new DAOgeneric();
 
@@ -30,12 +49,9 @@ public class JDlgCompraProduto extends javax.swing.JDialog {
         for (Object p : listProdutos) {
             ebs_jCboProduto.addItem((EbsProduto) p);
         }
-        List listCompras = dao.listAll(EbsCompra.class);
-        for (Object c : listCompras) {
-            ebs_jCboCompra.addItem((EbsCompra) c);
-        }
         
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -57,7 +73,7 @@ public class JDlgCompraProduto extends javax.swing.JDialog {
         ebs_jBtnCancelar = new javax.swing.JButton();
         ebs_jBtnOk = new javax.swing.JButton();
         jLblCompra = new javax.swing.JLabel();
-        ebs_jCboCompra = new javax.swing.JComboBox<EbsCompra>();
+        ebs_jTxtIdCompra = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -65,11 +81,21 @@ public class JDlgCompraProduto extends javax.swing.JDialog {
         jLblProduto.setText("Produto");
 
         ebs_jCboProduto.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        ebs_jCboProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ebs_jCboProdutoActionPerformed(evt);
+            }
+        });
 
         jLblQuantidade.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jLblQuantidade.setText("Quantidade");
 
         ebs_jTxtQuantidade.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        ebs_jTxtQuantidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ebs_jTxtQuantidadeKeyReleased(evt);
+            }
+        });
 
         jLblValorUnitario.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jLblValorUnitario.setText("Valor Unitário");
@@ -100,7 +126,12 @@ public class JDlgCompraProduto extends javax.swing.JDialog {
         jLblCompra.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         jLblCompra.setText("Compra");
 
-        ebs_jCboCompra.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        ebs_jTxtIdCompra.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        ebs_jTxtIdCompra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ebs_jTxtIdCompraKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,14 +140,6 @@ public class JDlgCompraProduto extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLblCompra)
-                            .addComponent(ebs_jCboCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLblProduto)
-                            .addComponent(ebs_jCboProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(ebs_jBtnOk)
@@ -133,8 +156,16 @@ public class JDlgCompraProduto extends javax.swing.JDialog {
                             .addGap(18, 18, 18)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLblTotal)
-                                .addComponent(ebs_jTxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(ebs_jTxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLblCompra)
+                            .addComponent(ebs_jTxtIdCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLblProduto)
+                            .addComponent(ebs_jCboProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,8 +176,8 @@ public class JDlgCompraProduto extends javax.swing.JDialog {
                     .addComponent(jLblProduto))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ebs_jCboCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ebs_jCboProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ebs_jCboProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ebs_jTxtIdCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -171,13 +202,63 @@ public class JDlgCompraProduto extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private EbsCompraProduto viewbean() {
+        EbsCompraProduto compraProduto = new EbsCompraProduto();
+        
+        EbsProduto produto = (EbsProduto) ebs_jCboProduto.getSelectedItem();
+        EbsCompraProdutoId compraProdutoID = new EbsCompraProdutoId();
+        compraProdutoID.setEbsFkCompra(compraID);
+        compraProdutoID.setEbsFkProduto(produto.getEbsIdProduto());
+        
+        compraProduto.setId(compraProdutoID);
+        compraProduto.setEbsProduto(produto);
+        compraProduto.setEbsQuantidade(Util.strToInt(ebs_jTxtQuantidade.getText()));
+        compraProduto.setEbsValorUnit(Util.strToDouble(ebs_jTxtValorUnitario.getText()));
+
+        return compraProduto;
+    }
+
+    public void beanview(EbsCompraProduto compraProduto) {
+        ebs_jCboProduto.setSelectedItem(compraProduto.getEbsProduto());
+        ebs_jTxtQuantidade.setText(Util.intToStr(compraProduto.getEbsQuantidade()));
+        ebs_jTxtValorUnitario.setText(Util.doubleToStr(compraProduto.getEbsValorUnit()));
+    }
+
     private void ebs_jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_ebs_jBtnCancelarActionPerformed
 
     private void ebs_jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnOkActionPerformed
-        this.dispose();
+        if (viewbean().getEbsQuantidade() == 0) {
+            Util.mostrar("Quantidade não pode ser 0", "Aviso");
+            ebs_jTxtQuantidade.grabFocus();
+        } else {
+            jDlgCompra.controllerCompraProdutos.addBean(viewbean());
+            this.dispose();
+        }
     }//GEN-LAST:event_ebs_jBtnOkActionPerformed
+
+    private void ebs_jCboProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jCboProdutoActionPerformed
+        EbsProduto p = (EbsProduto) ebs_jCboProduto.getSelectedItem();
+        ebs_jTxtValorUnitario.setText(Util.doubleToStr(p.getEbsValor()));
+        ebs_jTxtTotal.setText(Util.doubleToStr(p.getEbsValor()));
+        ebs_jTxtQuantidade.setText("1");
+    }//GEN-LAST:event_ebs_jCboProdutoActionPerformed
+
+    private void ebs_jTxtQuantidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ebs_jTxtQuantidadeKeyReleased
+        if (ebs_jTxtQuantidade.getText().equals("")) {
+            ebs_jTxtTotal.setText("0");
+        } else {
+            int qtd = Util.strToInt(ebs_jTxtQuantidade.getText());
+            double unitario = Util.strToDouble(ebs_jTxtValorUnitario.getText());
+            double total = qtd * unitario;
+            ebs_jTxtTotal.setText(Util.doubleToStr(total));
+        }
+    }//GEN-LAST:event_ebs_jTxtQuantidadeKeyReleased
+
+    private void ebs_jTxtIdCompraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ebs_jTxtIdCompraKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ebs_jTxtIdCompraKeyReleased
 
     /**
      * @param args the command line arguments
@@ -223,8 +304,8 @@ public class JDlgCompraProduto extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ebs_jBtnCancelar;
     private javax.swing.JButton ebs_jBtnOk;
-    private javax.swing.JComboBox<EbsCompra> ebs_jCboCompra;
     private javax.swing.JComboBox<EbsProduto> ebs_jCboProduto;
+    private javax.swing.JTextField ebs_jTxtIdCompra;
     private javax.swing.JTextField ebs_jTxtQuantidade;
     private javax.swing.JTextField ebs_jTxtTotal;
     private javax.swing.JTextField ebs_jTxtValorUnitario;

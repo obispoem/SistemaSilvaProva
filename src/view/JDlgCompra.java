@@ -5,14 +5,18 @@
 package view;
 
 import bean.EbsCompra;
+import bean.EbsCompraProduto;
 import bean.EbsFornecedor;
 import bean.EbsUsuario;
+import controller.ControllerCompraProdutos;
 import dao.DAOgeneric;
 import java.sql.Date;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.event.TableModelEvent;
 import tools.Util;
 
 /**
@@ -28,6 +32,8 @@ public class JDlgCompra extends javax.swing.JDialog {
      * @param modal
      */
     boolean incluir, pesquisar;
+    ControllerCompraProdutos controllerCompraProdutos;
+    DAOgeneric dao;
 
     public JDlgCompra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -36,10 +42,10 @@ public class JDlgCompra extends javax.swing.JDialog {
         setTitle("Compra");
         setLocationRelativeTo(null);
         habilitar(false);
+        Util.habilitar(false, ebs_jTxtTotal);
         Util.maskData(ebs_jFmtDataCompra);
 
-        dao.DAOgeneric dao = new DAOgeneric();
-
+        dao = new DAOgeneric();
         List listFornecedor = dao.listAll(EbsFornecedor.class);
         for (Object f : listFornecedor) {
             ebs_jCboFornecedor.addItem((EbsFornecedor) f);
@@ -51,22 +57,47 @@ public class JDlgCompra extends javax.swing.JDialog {
             //System.out.println(f);
         }
 
+        controllerCompraProdutos = new ControllerCompraProdutos();
+        controllerCompraProdutos.setList(new ArrayList());
+        ebs_jTblCompraProduto.setModel(controllerCompraProdutos);
+
+        ebs_jTxtTotal.setText("0");
+        controllerCompraProdutos.addTableModelListener((TableModelEvent e) -> {
+            List compraProdutos = controllerCompraProdutos.getList();
+            if (compraProdutos.isEmpty()) {
+                ebs_jTxtTotal.setText("0");
+                return;
+            }
+            double total = 0;
+            for (Object produto : compraProdutos) {
+                EbsCompraProduto p = (EbsCompraProduto) produto;
+                double valUnit = p.getEbsValorUnit();
+                int quant = p.getEbsQuantidade();
+                total += valUnit * quant;
+                ebs_jTxtTotal.setText(Util.doubleToStr(total));
+            }
+        });
+
     }
 
     private void habilitar(boolean status) {
         if (status) {
-            Util.habilitar(true, ebs_jTxtIdCompra, ebs_jFmtDataCompra, ebs_jCboFornecedor, ebs_jCboUsuario, ebs_jTxtTotal, ebs_jBtnCancelar, ebs_jBtnConfirmar,
+            Util.habilitar(true, ebs_jTxtIdCompra, ebs_jFmtDataCompra, ebs_jCboFornecedor, ebs_jCboUsuario, ebs_jBtnCancelar, ebs_jBtnConfirmar,
                     ebs_jBtnIncluirCompraProduto, ebs_jBtnAlterarCompraProduto, ebs_jBtnExcluirCompraProduto);
             Util.habilitar(false, ebs_jBtnIncluir, ebs_jBtnAlterar, ebs_jBtnPesquisar, ebs_jBtnExcluir);
         } else {
-            Util.habilitar(false, ebs_jTxtIdCompra, ebs_jFmtDataCompra, ebs_jCboFornecedor, ebs_jCboUsuario, ebs_jTxtTotal, ebs_jBtnCancelar, ebs_jBtnConfirmar,
+            Util.habilitar(false, ebs_jTxtIdCompra, ebs_jFmtDataCompra, ebs_jCboFornecedor, ebs_jCboUsuario, ebs_jBtnCancelar, ebs_jBtnConfirmar,
                     ebs_jBtnIncluirCompraProduto, ebs_jBtnAlterarCompraProduto, ebs_jBtnExcluirCompraProduto);
             Util.habilitar(true, ebs_jBtnIncluir, ebs_jBtnAlterar, ebs_jBtnPesquisar, ebs_jBtnExcluir);
         }
     }
 
     private void limparCampos() {
-        Util.limpar(ebs_jTxtIdCompra, ebs_jFmtDataCompra, ebs_jCboFornecedor, ebs_jCboUsuario, ebs_jTxtTotal);
+        Util.limpar(ebs_jTxtIdCompra, ebs_jFmtDataCompra, ebs_jCboFornecedor, ebs_jCboUsuario);
+        int rows = ebs_jTblCompraProduto.getRowCount();
+        for (int i = 0; i < rows; i++) {
+            controllerCompraProdutos.removeBean(controllerCompraProdutos.getBean(0));
+        }
     }
 
     private EbsCompra viewbean() {
@@ -106,6 +137,11 @@ public class JDlgCompra extends javax.swing.JDialog {
             }// Adiciona a usuario da compra na Classe
             c.setEbsUsuario(u);
 
+            // Verificar se o campo Total do usuário está vazio
+            String totalText = ebs_jTxtTotal.getText();
+            // Adiciona o id da compra na Classe
+            c.setEbsTotal(Util.strToDouble(totalText));
+
         } catch (NumberFormatException | ParseException ex) {
             Util.mostrar("Erro ao converter valores", "ERRO");
             Logger.getLogger(JDlgUsuario.class.getName()).log(Level.SEVERE, "Erro ao preencher usuário", ex);
@@ -120,9 +156,28 @@ public class JDlgCompra extends javax.swing.JDialog {
         ebs_jCboFornecedor.setSelectedItem(c.getEbsFornecedor());
         ebs_jCboUsuario.setSelectedItem(c.getEbsUsuario());
         ebs_jTxtTotal.setText(Util.doubleToStr(c.getEbsTotal()));
+
+        controllerCompraProdutos.setList(compIDcompraProduto(c.getEbsIdCompra()));
+        //     System.out.println("Lst " + lstCompraProduto);
+        //    System.out.println("LstBV " + lstCompraProdutoBv);
     }
 
+    private List compIDcompraProduto(int idCompra) {
+        List lstCompraProduto = dao.listAll(EbsCompraProduto.class);
+        List lstCompraProdutoBv = new ArrayList();
+        for (Object produto : lstCompraProduto) {
+            EbsCompraProduto p = (EbsCompraProduto) produto;
+//            int idCompraProdutoListss = p.getId().getEbsFkCompra();
+            int idCompraProdutoList = p.getEbsCompra().getEbsIdCompra();
+            if (idCompraProdutoList == idCompra) {
+                lstCompraProdutoBv.add(p);
+            }
+        }
+        return lstCompraProdutoBv;
+    }
+    
     private void telaPesquisar() {
+        limparCampos();
         pesquisar = true;
         Class c = EbsCompra.class;
         EbsCompra o = new EbsCompra();
@@ -132,7 +187,8 @@ public class JDlgCompra extends javax.swing.JDialog {
     }
 
     private void telaPesquisarProduto() {
-        JDlgCompraProduto jDlgCp = new JDlgCompraProduto(null, true);
+        int id = viewbean().getEbsIdCompra();
+        JDlgCompraProduto jDlgCp = new JDlgCompraProduto(null, true, this, id);
         jDlgCp.setVisible(true);
     }
 
@@ -208,6 +264,25 @@ public class JDlgCompra extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        ebs_jTblCompraProduto.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                ebs_jTblCompraProdutoAncestorMoved(evt);
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        ebs_jTblCompraProduto.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                ebs_jTblCompraProdutoPropertyChange(evt);
+            }
+        });
+        ebs_jTblCompraProduto.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
+            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
+                ebs_jTblCompraProdutoVetoableChange(evt);
+            }
+        });
         ebs_jSlpCompraProduto.setViewportView(ebs_jTblCompraProduto);
 
         ebs_jBtnIncluirCompraProduto.setFont(new java.awt.Font("Comic Sans MS", 0, 24)); // NOI18N
@@ -295,9 +370,9 @@ public class JDlgCompra extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLblIdCompra)
                                     .addComponent(ebs_jTxtIdCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -317,8 +392,10 @@ public class JDlgCompra extends javax.swing.JDialog {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(ebs_jTxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLblTotal)))
-                            .addComponent(ebs_jSlpCompraProduto))
-                        .addGap(18, 18, 18)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(ebs_jSlpCompraProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 791, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(ebs_jBtnIncluirCompraProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(ebs_jBtnAlterarCompraProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -336,7 +413,7 @@ public class JDlgCompra extends javax.swing.JDialog {
                         .addComponent(ebs_jBtnCancelar)
                         .addGap(18, 18, 18)
                         .addComponent(ebs_jBtnPesquisar)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -396,7 +473,6 @@ public class JDlgCompra extends javax.swing.JDialog {
 
     private void ebs_jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnAlterarActionPerformed
         if (pesquisar == false) {
-            //INSTACIAR TELA
             telaPesquisar();
         }
         habilitar(true);
@@ -422,9 +498,14 @@ public class JDlgCompra extends javax.swing.JDialog {
     }//GEN-LAST:event_ebs_jBtnExcluirActionPerformed
 
     private void ebs_jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnConfirmarActionPerformed
-        DAOgeneric dao = new DAOgeneric();
+        dao = new DAOgeneric();
         if (incluir == true) {
             dao.insert(viewbean());
+            for (int i = 0; i < ebs_jTblCompraProduto.getRowCount(); i++) {
+                EbsCompraProduto compraProduto = controllerCompraProdutos.getBean(i);
+                compraProduto.setEbsCompra(viewbean());
+                dao.insert(compraProduto);
+            }
         } else {
             dao.update(viewbean());
         }
@@ -441,16 +522,26 @@ public class JDlgCompra extends javax.swing.JDialog {
     }//GEN-LAST:event_ebs_jBtnAlterarCompraProdutoActionPerformed
 
     private void ebs_jBtnExcluirCompraProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ebs_jBtnExcluirCompraProdutoActionPerformed
-        if (Util.perguntar("Confirme exclusão!", "Deletar registro")) {
-            /*DAOgeneric dao = new DAOgeneric();
-            dao.delete(viewbean());*/
-            Util.mostrar("Exclusão realizada", "Aviso");
-            limparCampos();
+        if (Util.perguntar("Confirme a remoção!", "Remover registro")) {
+            int row = ebs_jTblCompraProduto.getSelectedRow();
+            controllerCompraProdutos.removeBean(controllerCompraProdutos.getBean(row));
+            Util.mostrar("Remoção realizada", "Aviso");
         } else {
-            Util.mostrar("Exclusão cancelada", "Aviso");
+            Util.mostrar("Remoção cancelada", "Aviso");
             habilitar(false);
         }
     }//GEN-LAST:event_ebs_jBtnExcluirCompraProdutoActionPerformed
+
+    private void ebs_jTblCompraProdutoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_ebs_jTblCompraProdutoPropertyChange
+    }//GEN-LAST:event_ebs_jTblCompraProdutoPropertyChange
+
+    private void ebs_jTblCompraProdutoVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_ebs_jTblCompraProdutoVetoableChange
+
+    }//GEN-LAST:event_ebs_jTblCompraProdutoVetoableChange
+
+    private void ebs_jTblCompraProdutoAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_ebs_jTblCompraProdutoAncestorMoved
+
+    }//GEN-LAST:event_ebs_jTblCompraProdutoAncestorMoved
 
     /**
      * @param args the command line arguments
@@ -466,16 +557,21 @@ public class JDlgCompra extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JDlgCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgCompra.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JDlgCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgCompra.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JDlgCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgCompra.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JDlgCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgCompra.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
