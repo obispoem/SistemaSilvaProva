@@ -5,7 +5,7 @@
  */
 package dao;
 
-import bean.EbsTransportadora;
+import bean.EbsCompra;
 import java.util.ArrayList;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -53,6 +53,16 @@ public class DAOgeneric {
         ArrayList lista = (ArrayList) criteria.list();
         session.getTransaction().commit();
         return lista.get(0);
+    }
+    
+    // ESPECIAL PARA O COMPRA_PRODUTO
+    public Object listProduto(Object compra, Class clazz) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(clazz);
+        criteria.add(Restrictions.eq("ebsCompra", compra));
+        ArrayList lista = (ArrayList) criteria.list();
+        session.getTransaction().commit();
+        return lista;
     }
 
     public ArrayList listAll(Class clazz) {

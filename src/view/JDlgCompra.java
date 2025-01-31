@@ -94,15 +94,12 @@ public class JDlgCompra extends javax.swing.JDialog {
 
     private void limparCampos() {
         Util.limpar(ebs_jTxtIdCompra, ebs_jFmtDataCompra, ebs_jCboFornecedor, ebs_jCboUsuario);
-        int rows = ebs_jTblCompraProduto.getRowCount();
-        for (int i = 0; i < rows; i++) {
-            controllerCompraProdutos.removeBean(controllerCompraProdutos.getBean(0));
-        }
+        controllerCompraProdutos.setList(new ArrayList());
     }
 
     private EbsCompra viewbean() {
         // instaciando a classe
-        EbsCompra c = new EbsCompra();
+        EbsCompra c = new EbsCompra();  
 
         try {
             // Verificar se o campo ID do usuário está vazio
@@ -157,25 +154,16 @@ public class JDlgCompra extends javax.swing.JDialog {
         ebs_jCboUsuario.setSelectedItem(c.getEbsUsuario());
         ebs_jTxtTotal.setText(Util.doubleToStr(c.getEbsTotal()));
 
-        controllerCompraProdutos.setList(compIDcompraProduto(c.getEbsIdCompra()));
+        controllerCompraProdutos.setList(compIDcompraProduto(c));
         //     System.out.println("Lst " + lstCompraProduto);
-        //    System.out.println("LstBV " + lstCompraProdutoBv);
+        //    System.out.println("LstBV " + lstCompraProdutoBv);        
     }
 
-    private List compIDcompraProduto(int idCompra) {
-        List lstCompraProduto = dao.listAll(EbsCompraProduto.class);
-        List lstCompraProdutoBv = new ArrayList();
-        for (Object produto : lstCompraProduto) {
-            EbsCompraProduto p = (EbsCompraProduto) produto;
-//            int idCompraProdutoListss = p.getId().getEbsFkCompra();
-            int idCompraProdutoList = p.getEbsCompra().getEbsIdCompra();
-            if (idCompraProdutoList == idCompra) {
-                lstCompraProdutoBv.add(p);
-            }
-        }
-        return lstCompraProdutoBv;
+    private List compIDcompraProduto(EbsCompra compra) {
+        List lstCompraProdutoBV = (List) dao.listProduto(compra,EbsCompraProduto.class);
+        return lstCompraProdutoBV;
     }
-    
+
     private void telaPesquisar() {
         limparCampos();
         pesquisar = true;
@@ -486,8 +474,15 @@ public class JDlgCompra extends javax.swing.JDialog {
             telaPesquisar();
         }
         if (Util.perguntar("Confirme exclusão!", "Deletar registro")) {
-            DAOgeneric dao = new DAOgeneric();
-            dao.delete(viewbean());
+            EbsCompra c = viewbean();
+            List lst = compIDcompraProduto(c);
+            System.out.println(lst);
+            System.out.println(lst.size());
+            for (int i = 0; i < lst.size(); i++) {
+                dao.delete(lst.get(i));       
+                System.out.println(lst.get(i));
+            }
+            dao.delete(c);
             Util.mostrar("Exclusão realizada", "Aviso");
             limparCampos();
         } else {
@@ -507,7 +502,7 @@ public class JDlgCompra extends javax.swing.JDialog {
                 dao.insert(compraProduto);
             }
         } else {
-            dao.update(viewbean());
+            Util.mostrar("Não Implementado", "Aviso");
         }
         limparCampos();
         habilitar(false);
